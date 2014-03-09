@@ -1,0 +1,25 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" version="2.0">
+	<tlib-version>1.0</tlib-version>
+	<short-name>tags</short-name>
+	<uri>http://svanderburg.github.io</uri>
+	<tag-file>
+		<name>index</name>
+		<path>/META-INF/tags/index.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>menusection</name>
+		<path>/META-INF/tags/menusection.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>scripts</name>
+		<path>/META-INF/tags/scripts.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>section</name>
+		<path>/META-INF/tags/section.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>styles</name>
+		<path>/META-INF/tags/styles.tag</path>
+	</tag-file>
+</taglib>

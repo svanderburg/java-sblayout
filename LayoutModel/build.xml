@@ -1,0 +1,28 @@
+<project name="LayoutModel" basedir="." default="generate.library.jar">
+	<property name="deploybuild.dir" value="bin" />
+	
+	<target name="compile">
+		<mkdir dir="${deploybuild.dir}" />
+		
+		<javac debug="on"
+			   fork="true"
+			   destdir="${deploybuild.dir}"
+			   srcdir="${basedir}/src" />
+	</target>
+	
+	<target name="generate.library.jar" depends="compile">
+		<jar destfile="LayoutModel.jar">
+			<fileset dir="${deploybuild.dir}" includes="**/*.class" />
+		</jar>
+	</target>
+	
+	<target name="doc">
+		<javadoc sourcepath="${basedir}/src" destdir="${basedir}/doc" />
+	</target>
+	
+	<target name="clean">
+		<delete file="LayoutModel.jar" />
+		<delete dir="${deploybuild.dir}" quiet="true" />
+		<delete dir="${basedir}/doc" quiet="true" />
+	</target>
+</project>

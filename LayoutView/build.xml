@@ -1,0 +1,54 @@
+<project name="LayoutView" basedir="." default="generate.library.jar">
+	<property name="deploybuild.dir" value="bin" />
+	
+	<!-- Imports environment variables as properties -->
+	<property environment="env" />
+	
+	<condition property="TOMCAT_LIB" value="${env.TOMCAT_LIB}" else="../apache-tomcat">
+		<isset property="env.TOMCAT_LIB" />
+	</condition>
+	
+	<condition property="LAYOUT_MODEL_LIB" value="${env.LAYOUT_MODEL_LIB}" else="../Layout">
+		<isset property="env.LAYOUT_MODEL_LIB" />
+	</condition>
+	
+	<!-- Sets the classpath which is used by the Java compiler -->
+	<path id="service.classpath">
+		<fileset dir="${TOMCAT_LIB}">
+			<include name="*.jar" />
+		</fileset>
+		
+		<fileset dir="${LAYOUT_MODEL_LIB}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<target name="compile">
+		<mkdir dir="${deploybuild.dir}" />
+		
+		<javac debug="on"
+			   fork="true"
+			   destdir="${deploybuild.dir}"
+			   srcdir="${basedir}/src"
+			   classpathref="service.classpath" />
+	</target>
+	
+	<target name="generate.library.jar" depends="compile">
+		<jar destfile="LayoutView.jar">
+			<fileset dir="${basedir}/src" includes="META-INF/**" />
+			<fileset dir="${deploybuild.dir}" includes="**/*.class" />
+		</jar>
+	</target>
+	
+	<target name="doc">
+		<javadoc sourcepath="${basedir}/src"
+			     destdir="${basedir}/doc" 
+		         classpathref="service.classpath" />
+	</target>
+	
+	<target name="clean">
+		<delete file="LayoutView.jar" />
+		<delete dir="${deploybuild.dir}" quiet="true" />
+		<delete dir="${basedir}/doc" quiet="true" />
+	</target>
+</project>
