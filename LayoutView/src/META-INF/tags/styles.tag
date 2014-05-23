@@ -1,6 +1,5 @@
 <%@ tag description="Displays a section that includes CSS files both on application and page level"
 	language="java"
-	pageEncoding="UTF-8"
 	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.page.*"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>

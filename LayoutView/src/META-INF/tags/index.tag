@@ -1,6 +1,5 @@
 <%@ tag description="Displays a simple HTML page containing the sections defined in the application layout"
 	language="java"
-	pageEncoding="UTF-8"
 	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.section.*, io.github.svanderburg.layout.model.page.*"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
@@ -12,7 +11,7 @@
 <html>
 	<head>
 		<title><%= currentPage.getTitle() %> - <%= app.getTitle() %></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=<%= app.getCharset() %>">
 		<layout:styles app="<%= app %>" currentPage="<%= currentPage %>" />
 		<layout:scripts app="<%= app %>" currentPage="<%= currentPage %>" />
 	</head>

@@ -1,6 +1,5 @@
 <%@ tag description="Displays a menu section containing links to sub pages"
 	language="java"
-	pageEncoding="UTF-8"
 	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.section.*, io.github.svanderburg.layout.model.page.*"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>

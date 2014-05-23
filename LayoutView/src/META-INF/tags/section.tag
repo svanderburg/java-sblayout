@@ -1,6 +1,5 @@
 <%@ tag description="Displays a section"
 	language="java"
-	pageEncoding="UTF-8"
 	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.page.*, io.github.svanderburg.layout.model.section.*"
 %>
 <%@ attribute name="id" required="true" type="String" description="Id of the section to be displayed" %>

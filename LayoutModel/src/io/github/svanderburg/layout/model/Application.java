@@ -29,6 +29,9 @@ public class Application
 	/** An array of JavaScript files included by all pages */
 	private String[] scripts;
 	
+	/** The character encoding standard that the page should use (defaults to UTF-8) */
+	private String charset;
+	
 	/**
 	 * Creates a new application instance.
 	 * 
@@ -38,10 +41,7 @@ public class Application
 	 */
 	public Application(String title, String[] styles, Page entryPage)
 	{
-		this.title = title;
-		this.styles = styles;
-		this.entryPage = entryPage;
-		section = new LinkedHashMap<String, Section>();
+		this(title, styles, entryPage, null, null);
 	}
 	
 	/**
@@ -54,8 +54,29 @@ public class Application
 	 */
 	public Application(String title, String[] styles, Page entryPage, String[] scripts)
 	{
-		this(title, styles, entryPage);
+		this(title, styles, entryPage, scripts, null);
+	}
+	
+	/**
+	 * Creates a new layout instance.
+	 * 
+	 * @param title Title of the entire application
+	 * @param styles An array of CSS stylesheets used for all pages
+	 * @param entryPage The entry page of the application
+	 * @param scripts An array of JavaScript files included by all pages
+	 * @param charset The character encoding standard that the page should use
+	 */
+	public Application(String title, String[] styles, Page entryPage, String[] scripts, String charset)
+	{
+		this.title = title;
+		this.styles = styles;
+		this.entryPage = entryPage;
 		this.scripts = scripts;
+		if(charset == null)
+			this.charset = "UTF-8";
+		else
+			this.charset = charset;
+		section = new LinkedHashMap<String, Section>();
 	}
 	
 	/**
@@ -249,5 +270,14 @@ public class Application
 	public Section getSection(String id)
 	{
 		return section.get(id);
+	}
+	
+	/**
+	 * Returns the charset
+	 * @return
+	 */
+	public String getCharset()
+	{
+		return charset;
 	}
 }
