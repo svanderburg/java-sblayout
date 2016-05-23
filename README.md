@@ -71,39 +71,41 @@ To create a very trivial web application displaying one page, we must first
 create an index servlet composing a simple application model and dispatches a
 view page:
 
-    package test;
-    import io.github.svanderburg.layout.model.*;
-    import io.github.svanderburg.layout.model.page.*;
-    import io.github.svanderburg.layout.model.page.content.*;
-    import io.github.svanderburg.layout.model.section.*;
-    
-    public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
-    {
-        private static final Application application = new Application(
-            /* Title */
-            "Trivial web application",
-            
-            /* CSS stylesheets */
-            new String[] { "default.css" },
-            
-            /* Pages */
-            new StaticContentPage("Fruit", new Contents("fruit.jsp"))
-        )
-        /* Sections */
-        .addSection("header", new StaticSection("header.jsp"))
-        .addSection("contents", new ContentsSection(true))
-        .addSection("footer", new StaticSection("footer.jsp"));
+```java
+package test;
+import io.github.svanderburg.layout.model.*;
+import io.github.svanderburg.layout.model.page.*;
+import io.github.svanderburg.layout.model.page.content.*;
+import io.github.svanderburg.layout.model.section.*;
+
+public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
+{
+    private static final Application application = new Application(
+        /* Title */
+        "Trivial web application",
         
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-        {
-            dispatchLayoutView(application, req, resp);
-        }
+        /* CSS stylesheets */
+        new String[] { "default.css" },
+        
+        /* Pages */
+        new StaticContentPage("Fruit", new Contents("fruit.jsp"))
+    )
+    /* Sections */
+    .addSection("header", new StaticSection("header.jsp"))
+    .addSection("contents", new ContentsSection(true))
+    .addSection("footer", new StaticSection("footer.jsp"));
     
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-        {
-            dispatchLayoutView(application, req, resp);
-        }
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        dispatchLayoutView(application, req, resp);
     }
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        dispatchLayoutView(application, req, resp);
+    }
+}
+```
 
 In the above code fragement, we compose an application model in which every sub
 page consists of three sections. The `header` and `footer` always display the
@@ -116,13 +118,15 @@ settings from the `default.css` stylesheet.
 The view page should reside in `WEB-INF/index.jsp`. A simple variant can be
 written as follows:
 
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="io.github.svanderburg.layout.model.*,io.github.svanderburg.layout.model.page.*, test.*"%>
-    <%
-    Application app = (Application)request.getAttribute("app");
-    Page currentPage = (Page)request.getAttribute("currentPage");
-    %>
-    <%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
-    <layout:index app="<%= app %>" currentPage="<%= currentPage %>" />
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="io.github.svanderburg.layout.model.*,io.github.svanderburg.layout.model.page.*, test.*"%>
+<%
+Application app = (Application)request.getAttribute("app");
+Page currentPage = (Page)request.getAttribute("currentPage");
+%>
+<%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
+<layout:index app="<%= app %>" currentPage="<%= currentPage %>" />
+```
 
 The above code fragment retrieves the application model and requested page. Then
 it includes the `index` taglib to compose a page with a trivial structure from
@@ -134,32 +138,34 @@ set to their corresponding array key in the model).
 We need the create the following `web.xml` file to make sure that the 
 `IndexServlet` can be used and that the error pages are mapped accordingly:
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <web-app xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-      <servlet>
-        <servlet-name>index</servlet-name>
-        <servlet-class>test.IndexServlet</servlet-class>
-      </servlet>
-      <servlet>
-        <servlet-name>indexjsp</servlet-name>
-        <jsp-file>/WEB-INF/index.jsp</jsp-file>
-      </servlet>
-      <servlet-mapping>
-        <servlet-name>index</servlet-name>
-        <url-pattern>/index.wss/*</url-pattern>
-      </servlet-mapping>
-      <welcome-file-list>
-        <welcome-file>index.wss</welcome-file>
-      </welcome-file-list>
-      <error-page>
-        <error-code>403</error-code>
-        <location>/index.wss/403</location>
-      </error-page>
-      <error-page>
-        <error-code>404</error-code>
-        <location>/index.wss/404</location>
-      </error-page>
-    </web-app>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <servlet>
+    <servlet-name>index</servlet-name>
+    <servlet-class>test.IndexServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>indexjsp</servlet-name>
+    <jsp-file>/WEB-INF/index.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>index</servlet-name>
+    <url-pattern>/index.wss/*</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.wss</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/index.wss/403</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/index.wss/404</location>
+  </error-page>
+</web-app>
+```
 
 After creating the model and view, we must implement the code for the static
 sections and sub pages. The above model expects a WAR file with the following
@@ -190,75 +196,76 @@ Besides the pages and stylesheets, we must also bundle the libraries and the
 compiled servlet class. To conveniently compose a WAR file, we can use the
 following Apache Ant recipe as a template:
 
-    <project name="Fruit" basedir="." default="generate.war">
-        <property name="build.dir" value="build" />
-        <property name="deploybuild.dir" value="${build.dir}/classes" />
+```xml
+<project name="Fruit" basedir="." default="generate.war">
+    <property name="build.dir" value="build" />
+    <property name="deploybuild.dir" value="${build.dir}/classes" />
 
-        <!-- Imports environment variables as properties -->
-        <property environment="env" />
-
+    <!-- Imports environment variables as properties -->
+    <property environment="env" />
         <condition property="TOMCAT_LIB" value="${env.TOMCAT_LIB}" else="../apache-tomcat">
-            <isset property="env.TOMCAT_LIB" />
-        </condition>
+        <isset property="env.TOMCAT_LIB" />
+    </condition>
 
-        <condition property="LAYOUT_MODEL_LIB" value="${env.LAYOUT_MODEL_LIB}" else="../LayoutModel">
-            <isset property="env.LAYOUT_MODEL_LIB" />
-        </condition>
+    <condition property="LAYOUT_MODEL_LIB" value="${env.LAYOUT_MODEL_LIB}" else="../LayoutModel">
+        <isset property="env.LAYOUT_MODEL_LIB" />
+    </condition>
 
-        <condition property="LAYOUT_VIEW_LIB" value="${env.LAYOUT_VIEW_LIB}" else="../LayoutView">
-            <isset property="env.LAYOUT_VIEW_LIB" />
-        </condition>
+    <condition property="LAYOUT_VIEW_LIB" value="${env.LAYOUT_VIEW_LIB}" else="../LayoutView">
+        <isset property="env.LAYOUT_VIEW_LIB" />
+    </condition>
 
-        <target name="copy.libraries">
-            <copy toDir="${basedir}/WebContent/WEB-INF/lib">
-                <fileset dir="${LAYOUT_MODEL_LIB}" includes="*.jar" />
-            </copy>
-            <copy toDir="${basedir}/WebContent/WEB-INF/lib">
-                <fileset dir="${LAYOUT_VIEW_LIB}" includes="*.jar" />
-            </copy>
-        </target>
+    <target name="copy.libraries">
+        <copy toDir="${basedir}/WebContent/WEB-INF/lib">
+            <fileset dir="${LAYOUT_MODEL_LIB}" includes="*.jar" />
+        </copy>
+        <copy toDir="${basedir}/WebContent/WEB-INF/lib">
+            <fileset dir="${LAYOUT_VIEW_LIB}" includes="*.jar" />
+        </copy>
+    </target>
         
-        <!-- Sets the classpath which is used by the Java compiler -->
-        <path id="service.classpath">
-            <fileset dir="${TOMCAT_LIB}">
-                <include name="*.jar" />
-            </fileset>
+    <!-- Sets the classpath which is used by the Java compiler -->
+    <path id="service.classpath">
+        <fileset dir="${TOMCAT_LIB}">
+            <include name="*.jar" />
+        </fileset>
+    
+        <fileset dir="${LAYOUT_MODEL_LIB}">
+            <include name="*.jar" />
+        </fileset>
         
-            <fileset dir="${LAYOUT_MODEL_LIB}">
-                <include name="*.jar" />
-            </fileset>
-                
-            <fileset dir="${LAYOUT_VIEW_LIB}">
-                <include name="*.jar" />
-            </fileset>
-        </path>
-        
-        <target name="compile" depends="copy.libraries">
-            <mkdir dir="${deploybuild.dir}" />
-                
-            <javac debug="on"
-                   fork="true"
-                   destdir="${deploybuild.dir}"
-                   srcdir="${basedir}/src"
-                   classpathref="service.classpath"/>
-        </target>
+        <fileset dir="${LAYOUT_VIEW_LIB}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    
+    <target name="compile" depends="copy.libraries">
+        <mkdir dir="${deploybuild.dir}" />
+            
+        <javac debug="on"
+               fork="true"
+               destdir="${deploybuild.dir}"
+               srcdir="${basedir}/src"
+               classpathref="service.classpath"/>
+    </target>
 
-        <target name="generate.war" depends="compile">
-            <war destfile="Fruit.war" basedir="${basedir}">
-                <classes dir="build/classes" includes="**" />
-                <fileset dir="WebContent" includes="**" />
-            </war>
-        </target>
+    <target name="generate.war" depends="compile">
+        <war destfile="Fruit.war" basedir="${basedir}">
+            <classes dir="build/classes" includes="**" />
+            <fileset dir="WebContent" includes="**" />
+        </war>
+    </target>
 
-        <target name="clean">
-            <delete file="${basedir}/Fruit.war" />
-            <delete>
-                <fileset dir="${basedir}/WebContent/WEB-INF/lib" includes="*.jar" />
-            </delete>
-            <delete dir="${deploybuild.dir}" quiet="true" />
-            <delete dir="${build.dir}" quiet="true" />
-        </target>
-    </project>
+    <target name="clean">
+        <delete file="${basedir}/Fruit.war" />
+        <delete>
+            <fileset dir="${basedir}/WebContent/WEB-INF/lib" includes="*.jar" />
+        </delete>
+        <delete dir="${deploybuild.dir}" quiet="true" />
+        <delete dir="${build.dir}" quiet="true" />
+    </target>
+</project>
+```
 
 The above Ant file defines several targets:
 
@@ -289,23 +296,27 @@ to a collection of sub pages by adding an additional parameter to the
 constructor. Each element in the array represents a sub page displaying a
 specific kind of fruit:
 
-    /* Pages */
-    new StaticContentPage("Fruit", new Contents("fruit.jsp"))
-        .addSubPage("apples", new StaticContentPage("Apples", new Contents("fruit/apples.jsp")))
-        .addSubPage("pears", new StaticContentPage("Pears", new Contents("fruit/pears.jsp")))
-        .addSubPage("oranges", new StaticContentPage("Oranges", new Contents("fruit/oranges.jsp"))),
-    
+```java
+/* Pages */
+new StaticContentPage("Fruit", new Contents("fruit.jsp"))
+    .addSubPage("apples", new StaticContentPage("Apples", new Contents("fruit/apples.jsp")))
+    .addSubPage("pears", new StaticContentPage("Pears", new Contents("fruit/pears.jsp")))
+    .addSubPage("oranges", new StaticContentPage("Oranges", new Contents("fruit/oranges.jsp"))),
+```
+
 By adding a menu section, we can automatically show a menu section on every page
 that displays links to their sub pages and marks the link that is currently
 selected as such. Do that we must change the section operations to include a menu
 section:
 
-    /* Sections */
-    .addSection("header", new StaticSection("header.jsp"))
-    .addSection("menu", new MenuSection(0))
-    .addSection("contents", new ContentsSection(true))
-    .addSection("footer", new StaticSection("footer.jsp"));
-    
+```java
+/* Sections */
+.addSection("header", new StaticSection("header.jsp"))
+.addSection("menu", new MenuSection(0))
+.addSection("contents", new ContentsSection(true))
+.addSection("footer", new StaticSection("footer.jsp"));
+```
+
 We must also add a couple of additional files that display the contents of each
 sub page:
 
@@ -328,28 +339,32 @@ Implementing more complex navigation structures
 It is also possible to have multiple levels of subpages. For example, we can also
 add sub pages to sub pages and an additional menu section (`submenu`) displaying
 the available sub sub pages per sub page:
-    
-    /* Sections */
-    .addSection("header", new StaticSection("header.jsp"))
-    .addSection("menu", new MenuSection(0))
-    .addSection("submenu", new MenuSection(1))
-    .addSection("contents", new ContentsSection(true))
-    .addSection("footer", new StaticSection("footer.jsp"));
+
+```java
+/* Sections */
+.addSection("header", new StaticSection("header.jsp"))
+.addSection("menu", new MenuSection(0))
+.addSection("submenu", new MenuSection(1))
+.addSection("contents", new ContentsSection(true))
+.addSection("footer", new StaticSection("footer.jsp"));
+```
 
 and modify the sub page to include sub sub pages:
 
-    /* Pages */
-    new StaticContentPage("Fruit", new Contents("fruit.jsp"))
-        .addSubPage("apples", new StaticContentPage("Apples", new Contents("fruit/apples.jsp"))
-            .addSubPage("red", StaticContentPage("Red", new Contents("fruit/apples/red.jsp")))
-            .addSubPage("green", StaticContentPage("Green", new Contents("fruit/apples/green.jsp"))))
-        .addSubPage("pears", new StaticContentPage("Pears", new Contents("fruit/pears.jsp"))
-            .addSubPage("yellow", StaticContentPage("Yellow", new Contents("fruit/pears/yellow.jsp")))
-            .addSubPage("green", StaticContentPage("Green", new Contents("fruit/pears/green.jsp"))))
-        .addSubPage("oranges", new StaticContentPage("Oranges", new Contents("fruit/oranges.jsp"))
-            .addSubPage("orange", StaticContentPage("Orange", new Contents("fruit/oranges/orange.jsp")))
-            .addSubPage("yellow", StaticContentPage("Yellow", new Contents("fruit/oranges/yellow.jsp")))),
-    
+```java
+/* Pages */
+new StaticContentPage("Fruit", new Contents("fruit.jsp"))
+    .addSubPage("apples", new StaticContentPage("Apples", new Contents("fruit/apples.jsp"))
+        .addSubPage("red", StaticContentPage("Red", new Contents("fruit/apples/red.jsp")))
+        .addSubPage("green", StaticContentPage("Green", new Contents("fruit/apples/green.jsp"))))
+    .addSubPage("pears", new StaticContentPage("Pears", new Contents("fruit/pears.jsp"))
+        .addSubPage("yellow", StaticContentPage("Yellow", new Contents("fruit/pears/yellow.jsp")))
+        .addSubPage("green", StaticContentPage("Green", new Contents("fruit/pears/green.jsp"))))
+    .addSubPage("oranges", new StaticContentPage("Oranges", new Contents("fruit/oranges.jsp"))
+        .addSubPage("orange", StaticContentPage("Orange", new Contents("fruit/oranges/orange.jsp")))
+        .addSubPage("yellow", StaticContentPage("Yellow", new Contents("fruit/oranges/yellow.jsp")))),
+```
+
 Similar to the previous example, a submenu section displays the subpages of a
 particular fruit kind.
 
@@ -370,12 +385,14 @@ Moreover, pages that are inaccessible should display a 403 error page.
 These error pages can be defined by adding them as a sub page to the entry page
 with keys `403` and `404`:
 
-    /* Pages */
-    new StaticContentPage("Fruit", new Contents("fruit.jsp"))
-        .addSubPage("403", new StaticContentPage("Forbidden", new Contents("error/403.jsp")))
-        .addSubPage("404", new StaticContentPage("Page not found", new Contents("error/404.jsp")))
-        ...
-    
+```java
+/* Pages */
+new StaticContentPage("Fruit", new Contents("fruit.jsp"))
+    .addSubPage("403", new StaticContentPage("Forbidden", new Contents("error/403.jsp")))
+    .addSubPage("404", new StaticContentPage("Page not found", new Contents("error/404.jsp")))
+    ...
+```
+
 Security handling
 -----------------
 If it is desired to secure a page from unauthorized access, you can implement
@@ -386,23 +403,25 @@ an end user is authorized to view it.
 For example, the following class implements a page displaying content that denies
 access to everyone:
 
-    package test;
-    import io.github.svanderburg.layout.model.page.*;
-    import io.github.svanderburg.layout.model.page.content.*;
+```java
+package test;
+import io.github.svanderburg.layout.model.page.*;
+import io.github.svanderburg.layout.model.page.content.*;
 
-    public class InaccessibleContentPage extends ContentPage
+public class InaccessibleContentPage extends ContentPage
+{
+    public InaccessibleContentPage(String title, Contents contents)
     {
-        public InaccessibleContentPage(String title, Contents contents)
-        {
-            super(title, contents);
-        }
-
-        @Override
-        public boolean checkAccessibility()
-        {
-            return false;
-        }
+        super(title, contents);
     }
+
+    @Override
+    public boolean checkAccessibility()
+    {
+        return false;
+    }
+}
+```
 
 You can do in the body of `checkAccessibility()` whatever you want. For example,
 you can also change it to take some cookie values containing a username and
@@ -425,28 +444,32 @@ content section of page.
 The following model makes the header as well as the contents sections dynamic for
 each sub page with the following sections:
 
-    /* Sections */
-    .addSection("header", new StaticSection("header.jsp"))
-    .addSection("menu", new MenuSection(0))
-    .addSection("contents", new ContentsSection(true))
-    .addSection("footer", new StaticSection("footer.jsp"));
+```java
+/* Sections */
+.addSection("header", new StaticSection("header.jsp"))
+.addSection("menu", new MenuSection(0))
+.addSection("contents", new ContentsSection(true))
+.addSection("footer", new StaticSection("footer.jsp"));
+```
 
 To make more than one section dynamic, we can define the pages as follows:
 
-    /* Pages */
-    new StaticContentPage("Fruit", new Contents()
-        .addSection("header", "fruit.jsp")
-        .addSection("contents", "fruit.jsp"))
-        .addSubPage("apples", new StaticContentPage("Apples", new Contents()
-            .addSection("header", "fruit/apples.jsp")
-            .addSection("contents", "fruit/apples.jsp")))
-        .addSubPage("pears", new StaticContentPage("Pears", new Contents()
-            .addSection("header", "fruit/pears.jsp")
-            .addSection("contents", "fruit/pears.jsp")))
-        .addSubPage("oranges", new StaticContentPage("Oranges", new Contents()
-            .addSection("header", "fruit/oranges.jsp")
-            .addSection("contents", "fruit/oranges.jsp")))
-            
+```java
+/* Pages */
+new StaticContentPage("Fruit", new Contents()
+    .addSection("header", "fruit.jsp")
+    .addSection("contents", "fruit.jsp"))
+    .addSubPage("apples", new StaticContentPage("Apples", new Contents()
+        .addSection("header", "fruit/apples.jsp")
+        .addSection("contents", "fruit/apples.jsp")))
+    .addSubPage("pears", new StaticContentPage("Pears", new Contents()
+        .addSection("header", "fruit/pears.jsp")
+        .addSection("contents", "fruit/pears.jsp")))
+    .addSubPage("oranges", new StaticContentPage("Oranges", new Contents()
+        .addSection("header", "fruit/oranges.jsp")
+        .addSection("contents", "fruit/oranges.jsp")))
+```
+
 The above model also requires a few additional files that should reside in the
 `header` subdirectory inside `WEB-INF`:
 
@@ -468,13 +491,15 @@ page (for example) contains a form.
 The contents object can also take a controller parameter that invokes a page that
 is processed before any HTML output is rendered:
 
-    /* Pages */
-    
-    new StaticContentPage("Fruit", new Contents("fruit.jsp"))
-        ...
-        .addSubPage("question", new StaticContentPage("Question", new Contents("question.jsp", "/question.wss"))),
-        ...
-    )
+```java
+/* Pages */
+
+new StaticContentPage("Fruit", new Contents("fruit.jsp"))
+    ...
+    .addSubPage("question", new StaticContentPage("Question", new Contents("question.jsp", "/question.wss"))),
+    ...
+)
+```
 
 The above code fragment adds a sub page that displays a form asking the user a
 question what his/her favorite fruit kind is. After a user submits his answer
@@ -493,13 +518,15 @@ parameters, we can use objects that are instance of `DynamicContentPage`.
 The following code fragments adds a sub page having a sub page that interprets
 the a component:
 
-    /* Pages */
-    
-    new StaticContentPage("Fruit", new Contents("fruit.jsp"))
-        ...
-        .addSubPage("fruitname", new DynamicContentPage("Display fruit name", "fruitname", new Contents("fruitname.jsp")))
-        ...
-    )
+```java
+/* Pages */
+
+new StaticContentPage("Fruit", new Contents("fruit.jsp"))
+    ...
+    .addSubPage("fruitname", new DynamicContentPage("Display fruit name", "fruitname", new Contents("fruitname.jsp")))
+    ...
+)
+```
 
 The first parameter of the constructor contains the title, the second the name of
 the variable that will be set when the sub page is processed, and the third
@@ -508,11 +535,13 @@ variable.
 
 We can implement the `fruitname.jsp` to simply display the parameter:
 
-    <%@ page import="java.util.*" %>
-    <%
-    HashMap<String, String> query = (HashMap<String, String>)request.getAttribute("query");
-    %>
-    <%= query.get("fruitname") %>
+```jsp
+<%@ page import="java.util.*" %>
+<%
+HashMap<String, String> query = (HashMap<String, String>)request.getAttribute("query");
+%>
+<%= query.get("fruitname") %>
+```
 
 If we address the page with: `http://localhost/index.wss/fruitname/apples` we
 should see:
@@ -533,14 +562,16 @@ Another use case is implementing internationalised web applications. By creating
 a page that is an instance of a `LocalizedContentPage` we can easily support
 the same page in multiple languages:
 
-    /* Pages */
-    new LocalizedContentPage()
-        .addSubPage("nl", new StaticContentPage("Nederlands", new Contents("nl.jsp")))
-        .addSubPage("en-us", new StaticContentPage("American", new Contents("en-us.jsp")))
-        .addSubPage("en-gb", new StaticContentPage("British", new Contents("en-gb.jsp")))
-        .addSubPage("fr", new StaticContentPage("Français", new Contents("fr.jsp")))
-        .addSubPage("de", new StaticContentPage("Deutsch", new Contents("de.jsp")))
-    
+```java
+/* Pages */
+new LocalizedContentPage()
+    .addSubPage("nl", new StaticContentPage("Nederlands", new Contents("nl.jsp")))
+    .addSubPage("en-us", new StaticContentPage("American", new Contents("en-us.jsp")))
+    .addSubPage("en-gb", new StaticContentPage("British", new Contents("en-gb.jsp")))
+    .addSubPage("fr", new StaticContentPage("Français", new Contents("fr.jsp")))
+    .addSubPage("de", new StaticContentPage("Deutsch", new Contents("de.jsp")))
+```
+
 The above code fragment defines a page with translations into Dutch, American,
 British, French and German.
 
