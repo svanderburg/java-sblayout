@@ -12,6 +12,14 @@
 	<head>
 		<title><%= currentPage.getTitle() %> - <%= app.getTitle() %></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<%= app.getCharset() %>">
+		<%
+		if(app.getIcon() != null)
+		{
+			%>
+			<link rel="shortcut icon" href="<%= getServletContext().getContextPath()."/" + app.getIcon() %>">
+			<%
+		}
+		%>
 		<layout:styles app="<%= app %>" currentPage="<%= currentPage %>" />
 		<layout:scripts app="<%= app %>" currentPage="<%= currentPage %>" />
 	</head>

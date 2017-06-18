@@ -20,7 +20,7 @@ in
     
       LAYOUT_MODEL_LIB = "${LayoutModel}/share/java";
       LAYOUT_VIEW_LIB = "${LayoutView}/share/java";
-      TOMCAT_LIB = "${pkgs.tomcat6}/lib";
+      TOMCAT_LIB = "${pkgs.tomcat7}/lib";
       
       buildPhase = ''
         ant generate.war

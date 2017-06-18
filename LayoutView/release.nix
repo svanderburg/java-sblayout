@@ -17,7 +17,7 @@ in
       buildInputs = [ pkgs.ant pkgs.jdk ];
       
       LAYOUT_MODEL_LIB = "${LayoutModel}/share/java";
-      TOMCAT_LIB = "${pkgs.tomcat6}/lib";
+      TOMCAT_LIB = "${pkgs.tomcat7}/lib";
       
       buildPhase = ''
         ant generate.library.jar
@@ -39,7 +39,7 @@ in
       buildInputs = [ pkgs.ant pkgs.jdk ];
     
       LAYOUT_MODEL_LIB = "${LayoutModel}/share/java";
-      TOMCAT_LIB = "${pkgs.tomcat6}/lib";
+      TOMCAT_LIB = "${pkgs.tomcat7}/lib";
     
       buildPhase = ''
         ant doc

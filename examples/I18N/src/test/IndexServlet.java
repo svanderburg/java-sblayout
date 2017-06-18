@@ -41,8 +41,10 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 				.addSubPage("en-us", new HiddenStaticContentPage("Forbidden", new Contents("error/403/en-us.jsp")))
 				.addSubPage("en-gb", new HiddenStaticContentPage("Forbidden", new Contents("error/403/en-gb.jsp")))
 				.addSubPage("fr", new HiddenStaticContentPage("Interdit", new Contents("error/403/fr.jsp")))
-				.addSubPage("de", new HiddenStaticContentPage("Verboten", new Contents("error/403/de.jsp"))))
-			    
+				.addSubPage("de", new HiddenStaticContentPage("Verboten", new Contents("error/403/de.jsp")))),
+
+		/* Favorite icon */
+		"favicon.ico"
 	)
 	/* Sections */
 	.addSection("header", new StaticSection("header.jsp"))

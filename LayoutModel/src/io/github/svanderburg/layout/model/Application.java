@@ -25,7 +25,10 @@ public class Application
 
 	/** Contains the path id components derived from the URL */
 	private String[] menuPathIds;
-	
+
+	/** The favorite icon the page should use */
+	private String icon;
+
 	/** An array of JavaScript files included by all pages */
 	private String[] scripts;
 	
@@ -41,20 +44,34 @@ public class Application
 	 */
 	public Application(String title, String[] styles, Page entryPage)
 	{
-		this(title, styles, entryPage, null, null);
+		this(title, styles, entryPage, null, null, null);
+	}
+	
+	/**
+	 * Creates a new application instance.
+	 *
+	 * @param title Title of the entire application
+	 * @param styles An array of CSS stylesheets used for all pages
+	 * @param entryPage The entry page of the application
+	 * @param icon The favorite icon the page should use
+	 */
+	public Application(String title, String[] styles, Page entryPage, String icon)
+	{
+		this(title, styles, entryPage, icon, null, null);
 	}
 	
 	/**
 	 * Creates a new layout instance.
-	 * 
+	 *
 	 * @param title Title of the entire application
 	 * @param styles An array of CSS stylesheets used for all pages
 	 * @param entryPage The entry page of the application
+	 * @param icon The favorite icon the page should use
 	 * @param scripts An array of JavaScript files included by all pages
 	 */
-	public Application(String title, String[] styles, Page entryPage, String[] scripts)
+	public Application(String title, String[] styles, Page entryPage, String icon, String[] scripts)
 	{
-		this(title, styles, entryPage, scripts, null);
+		this(title, styles, entryPage, icon, scripts, null);
 	}
 	
 	/**
@@ -63,14 +80,16 @@ public class Application
 	 * @param title Title of the entire application
 	 * @param styles An array of CSS stylesheets used for all pages
 	 * @param entryPage The entry page of the application
+	 * @param icon The favorite icon the page should use
 	 * @param scripts An array of JavaScript files included by all pages
 	 * @param charset The character encoding standard that the page should use
 	 */
-	public Application(String title, String[] styles, Page entryPage, String[] scripts, String charset)
+	public Application(String title, String[] styles, Page entryPage, String icon, String[] scripts, String charset)
 	{
 		this.title = title;
 		this.styles = styles;
 		this.entryPage = entryPage;
+		this.icon = icon;
 		this.scripts = scripts;
 		if(charset == null)
 			this.charset = "UTF-8";
@@ -212,6 +231,16 @@ public class Application
 	public String getMenuPathId(int id)
 	{
 		return menuPathIds[id];
+	}
+	
+	/**
+	 * Returns the icon.
+	 *
+	 * @return Icon path
+	 */
+	public String getIcon()
+	{
+		return icon;
 	}
 	
 	/**

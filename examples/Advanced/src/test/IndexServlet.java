@@ -64,7 +64,10 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 				.addSubPage("second", new StaticContentPage("Second", new Contents()
 					.addSection("contents", "header/second.jsp")
 					.addSection("header", "header/second.jsp")))),
+		/* Favorite icon */
+		"favicon.ico",
 		
+		/* JavaScript includes */
 		new String[] { "hello.js" }
 	)
 	/* Sections */

@@ -45,7 +45,10 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 			.addSubPage("firstname", new DynamicContentPage("First name", "firstname", new Contents("firstname.jsp"), new StaticContentPage("First name", new Contents("firstname/firstname.jsp"))
 				.addSubPage("lastname", new DynamicContentPage("Last name", "lastname", new Contents("firstname/lastname.jsp"), new StaticContentPage("Last name", new Contents("firstname/lastname/lastname.jsp"))))))
 			
-			.addSubPage("external", new ExternalPage("External", "http://www.google.com"))
+			.addSubPage("external", new ExternalPage("External", "http://www.google.com")),
+		
+		/* Favorite icon */
+		"favicon.ico"
 	)
 	/* Sections */
 	.addSection("header", new StaticSection("header.jsp"))
