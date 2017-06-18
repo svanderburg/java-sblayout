@@ -4,4 +4,4 @@ Application app = (Application)request.getAttribute("app");
 Page currentPage = (Page)request.getAttribute("currentPage");
 %>
 <%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
-<layout:index app="<%= app %>" currentPage="<%= currentPage %>" />
+<layout:index app="<%= app %>" currentPage="<%= currentPage %>" contextPath="<%= getServletContext().getContextPath() %>" />

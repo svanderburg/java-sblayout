@@ -4,6 +4,7 @@
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
 <%@ attribute name="currentPage" required="true" type="Page" description="Page to be displayed" %>
+<%@ attribute name="contextPath" required="false" type="String" description="Context path of the servlet" %>
 
 <%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
 
@@ -16,7 +17,7 @@
 		if(app.getIcon() != null)
 		{
 			%>
-			<link rel="shortcut icon" href="<%= getServletContext().getContextPath()."/" + app.getIcon() %>">
+			<link rel="shortcut icon" href="<%= contextPath + "/" + app.getIcon() %>">
 			<%
 		}
 		%>
