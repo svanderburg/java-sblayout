@@ -1,17 +1,17 @@
 package io.github.svanderburg.layout.model.page;
 import io.github.svanderburg.layout.model.*;
 import io.github.svanderburg.layout.model.page.content.*;
-
+import io.github.svanderburg.layout.model.page.subpages.*;
 import java.util.*;
 
 /**
  * Defines a page referring to a collection of sub pages whose links can be picked
- * from a menu section. 
+ * from a menu section.
  */
-public class StaticContentPage extends ContentPage
+public class StaticContentPage extends ContentPage implements ExtendablePage
 {
-	/** An associative array mapping URL path components to sub pages */
-	protected LinkedHashMap<String, Page> subPages;
+	/** Object used to add subpages to this page */
+	protected SubPageExtender subPageExtender;
 	
 	/**
 	 * Creates a new ContentPage instance.
@@ -22,62 +22,54 @@ public class StaticContentPage extends ContentPage
 	public StaticContentPage(String title, Contents contents)
 	{
 		super(title, contents);
-		subPages = new LinkedHashMap<String, Page>();
+		subPageExtender = new SubPageExtender();
 	}
 	
 	/**
 	 * Adds a sub page to which the menu section displaying the current page refers
-	 * 
+	 *
 	 * @param id URL path component
 	 * @param subPage Sub page reference to add
 	 * @return A reference to itself
 	 */
 	public StaticContentPage addSubPage(String id, Page subPage)
 	{
-		subPages.put(id, subPage);
+		subPageExtender.addSubPage(id, subPage);
 		return this;
 	}
 	
 	/**
-	 * Checks whether a subpage is directly reachable with the given id from the current page
-	 *  
-	 * @param id URL path component
-	 * @return true if and only if the sub page is directly reachable 
+	 * @see ExtendablePage#hasSubPage(String)
 	 */
 	public boolean hasSubPage(String id)
 	{
-		return subPages.containsKey(id);
+		return subPageExtender.hasSubPage(id);
 	}
 	
 	/**
-	 * Gets the sub page that is reachable with the given path id
-	 * 
-	 * @param id URL path component
-	 * @return The requested sub page
+	 * @see ExtendablePage#getSubPage(String)
 	 */
 	public Page getSubPage(String id)
 	{
-		return subPages.get(id);
+		return subPageExtender.getSubPage(id);
 	}
 	
 	/**
-	 * Returns the keys of all subpages.
-	 * 
-	 * @return A set containing the keys of all the subpages
+	 * @see ExtendablePage#subPageKeys()
 	 */
 	public Set<String> subPageKeys()
 	{
-		return subPages.keySet();
+		return subPageExtender.subPageKeys();
 	}
 	
 	/**
-	 * @see Page#lookupSubPage(Page, String[], int, HashMap)
+	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Page entryPage, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
 		if(ids.length == index)
-			return super.lookupSubPage(entryPage, ids, index, params);
+			return super.lookupSubPage(application, ids, index, params);
 		else
 		{
 			String currentId = ids[index];
@@ -85,7 +77,7 @@ public class StaticContentPage extends ContentPage
 			if(hasSubPage(currentId))
 			{
 				Page currentPage = getSubPage(currentId);
-				return currentPage.lookupSubPage(entryPage, ids, index + 1, params);			
+				return currentPage.lookupSubPage(application, ids, index + 1, params);
 			}
 			else
 				throw new PageNotFoundException();

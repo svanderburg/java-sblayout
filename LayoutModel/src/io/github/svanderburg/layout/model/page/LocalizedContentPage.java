@@ -33,23 +33,23 @@ public class LocalizedContentPage extends StaticContentPage
 	public LocalizedContentPage addSubPage(String id, ContentPage subPage)
 	{
 		/* Adopt title and contents of first item */
-		if(subPages.size() == 0)
+		if(subPageExtender.getSubPages().size() == 0)
 		{
 			setTitle(subPage.getTitle());
 			setContents(subPage.getContents());
 		}
 		
 		/* Add the site item */
-		subPages.put(id, subPage);
+		subPageExtender.addSubPage(id, subPage);
 		
 		return this;
 	}
 	
 	/**
-	 * @see Page#lookupSubPage(Page, String[], int, HashMap)
+	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Page entryPage, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
 		if(ids.length == index)
 		{
@@ -80,7 +80,7 @@ public class LocalizedContentPage extends StaticContentPage
 				if(hasSubPage(identifier))
 				{
 					Page result = getSubPage(identifier);
-					return result.lookupSubPage(entryPage, ids, index, params);
+					return result.lookupSubPage(application, ids, index, params);
 				}
 				else
 				{
@@ -94,17 +94,17 @@ public class LocalizedContentPage extends StaticContentPage
 						if(hasSubPage(language))
 						{
 							Page result = getSubPage(language);
-							return result.lookupSubPage(entryPage, ids, index, params);
+							return result.lookupSubPage(application, ids, index, params);
 						}
 					}
 				}
 			}
 			
 			/* If all locales have been tried and still none has been found, return the first sub item that is considered the default */
-			Page result = subPages.entrySet().iterator().next().getValue();
-			return result.lookupSubPage(entryPage, ids, index, params);
+			Page result = subPageExtender.getSubPages().entrySet().iterator().next().getValue();
+			return result.lookupSubPage(application, ids, index, params);
 		}
 		else
-			return super.lookupSubPage(entryPage, ids, index, params);
+			return super.lookupSubPage(application, ids, index, params);
 	}	
 }

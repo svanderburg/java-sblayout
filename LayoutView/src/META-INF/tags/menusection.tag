@@ -1,6 +1,6 @@
 <%@ tag description="Displays a menu section containing links to sub pages"
 	language="java"
-	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.section.*, io.github.svanderburg.layout.model.page.*"
+	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.section.*, io.github.svanderburg.layout.model.page.*, io.github.svanderburg.layout.model.page.subpages.*"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
 <%@ attribute name="menuSection" required="true" type="MenuSection" description="Menu section to display" %>
@@ -17,22 +17,22 @@ if(menuSection.getLevel() <= app.menuPathIdsLength())
 		String currentId = app.getMenuPathId(j);
 		subPath = subPath+currentId+"/";
 		
-		if(page instanceof StaticContentPage)
+		if(page instanceof ExtendablePage)
 		{
-			StaticContentPage staticContentPage = (StaticContentPage)page;
-			page = staticContentPage.getSubPage(currentId);
+			ExtendablePage extendablePage = (ExtendablePage)page;
+			page = extendablePage.getSubPage(currentId);
 		}
 	}
 	
 	// Display links to the sub pages
 	
-	if(page instanceof StaticContentPage)
+	if(page instanceof ExtendablePage)
 	{
-		StaticContentPage staticContentPage = (StaticContentPage)page;
+		ExtendablePage extendablePage = (ExtendablePage)page;
 		
-		for(String subId : staticContentPage.subPageKeys())
+		for(String subId : extendablePage.subPageKeys())
 		{
-			Page subPage = staticContentPage.getSubPage(subId);							
+			Page subPage = extendablePage.getSubPage(subId);
 			
 			if(subPage.checkVisibility() && subPage.checkAccessibility())
 			{

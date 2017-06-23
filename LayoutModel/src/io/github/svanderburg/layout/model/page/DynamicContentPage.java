@@ -32,13 +32,13 @@ public class DynamicContentPage extends ContentPage
 	}
 	
 	/**
-	 * @see Page#lookupSubPage(Page, String[], int, HashMap)
+	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Page entryPage, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
 		if(ids.length == index)
-			return super.lookupSubPage(entryPage, ids, index, params);
+			return super.lookupSubPage(application, ids, index, params);
 		else
 		{
 			String currentId = ids[index];
@@ -48,7 +48,7 @@ public class DynamicContentPage extends ContentPage
 			HashMap<String, String> query = (HashMap<String, String>)params.get("query");
 			query.put(param, currentId);
 			
-			return dynamicSubPage.lookupSubPage(entryPage, ids, index + 1, params);
+			return dynamicSubPage.lookupSubPage(application, ids, index + 1, params);
 		}
 	}
 }

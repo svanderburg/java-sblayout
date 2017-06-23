@@ -100,7 +100,7 @@ public class Application
 	
 	/**
 	 * Returns the title of the entire application
-	 * 
+	 *
 	 * @return Title of the entire application
 	 */
 	public String getTitle()
@@ -120,7 +120,8 @@ public class Application
 	
 	/**
 	 * Lookups the 403 error page and changes the internal id components to refer to it.
-	 * 
+	 *
+	 * @param params A hash map containing additional parameters
 	 * @return The 403 error page
 	 */
 	public Page lookup403Page(HashMap<String, Object> params)
@@ -129,7 +130,7 @@ public class Application
 		
 		try
 		{
-			return entryPage.lookupSubPage(menuPathIds, params);
+			return entryPage.lookupSubPage(this, menuPathIds, params);
 		}
 		catch(Exception ex)
 		{
@@ -141,6 +142,7 @@ public class Application
 	/**
 	 * Lookups the 404 error page and changes the internal id components to refer to it.
 	 *
+	 * @param params A hash map containing additional parameters
 	 * @return The 404 error page
 	 */
 	public Page lookup404Page(HashMap<String, Object> params)
@@ -149,7 +151,7 @@ public class Application
 		
 		try
 		{
-			return entryPage.lookupSubPage(menuPathIds, params);
+			return entryPage.lookupSubPage(this, menuPathIds, params);
 		}
 		catch(Exception ex)
 		{
@@ -159,8 +161,24 @@ public class Application
 	}
 	
 	/**
+	 * Looks up the the requested page in the page hierarchy.
+	 *
+	 * @param menuPathIds An array of strings representing the keys of the page for each level
+	 * @param params A hash map containing additional parameters
+	 * @return The page which is currently requested
+	 * @throws PageNotFoundException If the page cannot be found
+	 * @throws PageForbiddenException If access to the page is restricted
+	 */
+	
+	public Page lookupSubPage(String[] menuPathIds, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	{
+		this.menuPathIds = menuPathIds;
+		return entryPage.lookupSubPage(this, menuPathIds, params);
+	}
+	
+	/**
 	 * Looks up the currently requested page to be displayed, by looking at the structure of the current URL
-	 * 
+	 *
 	 * @param requestURL Contains the URL that has been requested
 	 * @param contextPath Contains the path to web application
 	 * @param servletPath Contains the path to the servlet
@@ -182,7 +200,7 @@ public class Application
 		else
 			menuPathIds = new String[0];
 		
-		return entryPage.lookupSubPage(menuPathIds, params);
+		return lookupSubPage(menuPathIds, params);
 	}
 	
 	/**
@@ -292,7 +310,7 @@ public class Application
 	
 	/**
 	 * Returns the section with a given id
-	 * 
+	 *
 	 * @param id Id of a division
 	 * @return The section with the given id
 	 */
@@ -303,7 +321,8 @@ public class Application
 	
 	/**
 	 * Returns the charset
-	 * @return
+	 *
+	 * @return Charset value
 	 */
 	public String getCharset()
 	{

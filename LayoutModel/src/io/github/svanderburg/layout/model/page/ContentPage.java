@@ -63,10 +63,10 @@ public class ContentPage extends Page
 	}
 	
 	/**
-	 * @see Page#lookupSubPage(Page, String[], int, HashMap)
+	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Page entryPage, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
 		if(ids.length == index)
 		{
