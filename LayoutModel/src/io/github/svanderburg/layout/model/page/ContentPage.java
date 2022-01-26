@@ -76,6 +76,6 @@ public class ContentPage extends Page
 				throw new PageForbiddenException();
 		}
 		else
-			throw new PageNotFoundException(); // A ContentSiteItem has no subitems
+			throw new PageNotFoundException(); // A ContentPage has no subitems
 	}
 }

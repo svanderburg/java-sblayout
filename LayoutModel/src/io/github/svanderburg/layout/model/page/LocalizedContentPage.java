@@ -100,7 +100,7 @@ public class LocalizedContentPage extends StaticContentPage
 				}
 			}
 			
-			/* If all locales have been tried and still none has been found, return the first sub item that is considered the default */
+			/* If all locales have been tried and still none has been found, return the first sub item (that is considered the default) */
 			Page result = subPageExtender.getSubPages().entrySet().iterator().next().getValue();
 			return result.lookupSubPage(application, ids, index, params);
 		}
