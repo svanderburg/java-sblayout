@@ -23,9 +23,6 @@ public class Application
 	/** The entry page of the application (which itself may refer to other sub pages) */
 	private Page entryPage;
 
-	/** Contains the path id components derived from the URL */
-	private String[] menuPathIds;
-
 	/** The favorite icon the page should use */
 	private String icon;
 
@@ -119,18 +116,19 @@ public class Application
 	}
 	
 	/**
-	 * Lookups the 403 error page and changes the internal id components to refer to it.
+	 * Derives the route to the 403 error page.
 	 *
 	 * @param params A hash map containing additional parameters
 	 * @return The 403 error page
 	 */
-	public Page lookup403Page(HashMap<String, Object> params)
+	public Route determine403Route(HashMap<String, Object> params)
 	{
-		menuPathIds = new String[] { "403" };
+		Route route = new Route(new String[] { "403" });
 		
 		try
 		{
-			return entryPage.lookupSubPage(this, menuPathIds, params);
+			entryPage.examineRoute(this, route, params);
+			return route;
 		}
 		catch(Exception ex)
 		{
@@ -140,18 +138,19 @@ public class Application
 	}
 	
 	/**
-	 * Lookups the 404 error page and changes the internal id components to refer to it.
+	 * Derives the route to the 404 error page.
 	 *
 	 * @param params A hash map containing additional parameters
 	 * @return The 404 error page
 	 */
-	public Page lookup404Page(HashMap<String, Object> params)
+	public Route determine404Route(HashMap<String, Object> params)
 	{
-		menuPathIds = new String[] { "404" };
+		Route route = new Route(new String[] { "404" });
 		
 		try
 		{
-			return entryPage.lookupSubPage(this, menuPathIds, params);
+			entryPage.examineRoute(this, route, params);
+			return route;
 		}
 		catch(Exception ex)
 		{
@@ -161,36 +160,35 @@ public class Application
 	}
 	
 	/**
-	 * Looks up the the requested page in the page hierarchy.
+	 * Examines a route derived from the path components of the requested URL and records all pages visited.
 	 *
-	 * @param menuPathIds An array of strings representing the keys of the page for each level
+	 * @param route Route to investigate
 	 * @param params A hash map containing additional parameters
-	 * @return The page which is currently requested
 	 * @throws PageNotFoundException If the page cannot be found
 	 * @throws PageForbiddenException If access to the page is restricted
 	 */
 	
-	public Page lookupSubPage(String[] menuPathIds, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Route route, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
-		this.menuPathIds = menuPathIds;
-		return entryPage.lookupSubPage(this, menuPathIds, params);
+		entryPage.examineRoute(this, route, params);
 	}
 	
 	/**
-	 * Looks up the currently requested page to be displayed, by looking at the structure of the current URL
+	 * Determines the route from the entry page to the requested page derived from the path components of the requested URL.
 	 *
 	 * @param requestURL Contains the URL that has been requested
 	 * @param contextPath Contains the path to web application
 	 * @param servletPath Contains the path to the servlet
 	 * @param params A hash map containing additional parameters
-	 * @return The page which is currently requested
+	 * @return A route that records all visited pages
 	 * @throws PageNotFoundException If the page cannot be found
 	 * @throws PageForbiddenException If access to the page is restricted
 	 */
 	
-	public Page lookupCurrentPage(String requestURL, String contextPath, String servletPath, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public Route determineRoute(String requestURL, String contextPath, String servletPath, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
 		String sitePath = contextPath+"/"+servletPath;
+		String[] menuPathIds;
 		
 		if(requestURL.length() > sitePath.length()) /* We are not at root level */
 		{
@@ -200,7 +198,9 @@ public class Application
 		else
 			menuPathIds = new String[0];
 		
-		return lookupSubPage(menuPathIds, params);
+		Route route = new Route(menuPathIds);
+		examineRoute(route, params);
+		return route;
 	}
 	
 	/**
@@ -225,30 +225,6 @@ public class Application
 	public String getStyle(int index)
 	{
 		return styles[index];
-	}
-	
-	/**
-	 * Returns the number of menu path id components
-	 * 
-	 * @return The number of menu path id components
-	 */
-	public int menuPathIdsLength()
-	{
-		if(menuPathIds == null)
-			return 0;
-		else
-			return menuPathIds.length;
-	}
-	
-	/**
-	 * Returns a menu path id component
-	 * 
-	 * @param id Index of the menu path components
-	 * @return Menu path component
-	 */
-	public String getMenuPathId(int id)
-	{
-		return menuPathIds[id];
 	}
 	
 	/**

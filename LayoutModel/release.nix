@@ -13,7 +13,7 @@ in
     pkgs.stdenv.mkDerivation {
       name = "LayoutModel";
       src = ./.;
-      buildInputs = [ pkgs.ant pkgs.jdk ];
+      buildInputs = [ pkgs.ant pkgs.jdk8 ];
       buildPhase = ''
         ant generate.library.jar
       '';
@@ -22,11 +22,11 @@ in
         mv *.jar $out/share/java
       '';
     });
-  
+
   doc = pkgs.stdenv.mkDerivation {
     name = "LayoutModel-doc";
     src = ./.;
-    buildInputs = [ pkgs.ant pkgs.jdk ];
+    buildInputs = [ pkgs.ant pkgs.jdk8 ];
     buildPhase = ''
       ant doc
     '';

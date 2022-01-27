@@ -4,37 +4,24 @@
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
 <%@ attribute name="menuSection" required="true" type="MenuSection" description="Menu section to display" %>
-
+<%@ attribute name="route" required="true" type="Route" description="Route from the entry page to current page to be displayed" %>
 <%
-if(menuSection.getLevel() <= app.menuPathIdsLength())
+if(menuSection.getLevel() <= route.size())
 {
-	// Seek the page which links to their sub pages must be displayed in the menusection
-	Page page = app.getEntryPage();
-	String subPath = "";
-	
-	for(int j = 0; j < menuSection.getLevel(); j++)
-	{
-		String currentId = app.getMenuPathId(j);
-		subPath = subPath+currentId+"/";
-		
-		if(page instanceof ExtendablePage)
-		{
-			ExtendablePage extendablePage = (ExtendablePage)page;
-			page = extendablePage.getSubPage(currentId);
-		}
-	}
+	String subPath = route.composeBaseURL(menuSection.getLevel());
+	Page rootPage = route.getPage(menuSection.getLevel());
 	
 	// Display links to the sub pages
 	
-	if(page instanceof ExtendablePage)
+	if(rootPage instanceof ExtendablePage)
 	{
-		ExtendablePage extendablePage = (ExtendablePage)page;
+		ExtendablePage extendablePage = (ExtendablePage)rootPage;
 		
 		for(String subId : extendablePage.subPageKeys())
 		{
 			Page subPage = extendablePage.getSubPage(subId);
 			
-			if(subPage.checkVisibility() && subPage.checkAccessibility())
+			if(subPage.checkVisibleInMenu())
 			{
 				if(subPage instanceof ExternalPage)
 				{
@@ -46,7 +33,7 @@ if(menuSection.getLevel() <= app.menuPathIdsLength())
 				else
 				{
 					%>
-					<a<%if(app.menuPathIdsLength() > menuSection.getLevel() && app.getMenuPathId(menuSection.getLevel()).equals(subId)) { out.print(" class=\"active\""); }%> href="<%= request.getContextPath()+request.getServletPath()+"/"+subPath+subId %>"><%= subPage.getTitle() %></a>
+					<a<%if(route.hasVisitedPageOnLevel(subId, menuSection.getLevel())) { out.print(" class=\"active\""); }%> href="<%= request.getContextPath()+request.getServletPath()+"/"+subPath+subId %>"><%= subPage.getTitle() %></a>
 					<%
 				}
 			}

@@ -5,6 +5,7 @@
 <%@ attribute name="id" required="true" type="String" description="Id of the section to be displayed" %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
 <%@ attribute name="section" required="true" type="Section" description="Section to be displayed" %>
+<%@ attribute name="route" required="true" type="Route" description="Route from the entry page to the current page to be displayed" %>
 <%@ attribute name="currentPage" required="true" type="Page" description="Page to be currently displayed" %>
 
 <%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
@@ -20,7 +21,7 @@
 	else if(section instanceof MenuSection)
 	{
 		%>
-		<layout:menusection app="<%= app %>" menuSection="<%= (MenuSection)section %>" />
+		<layout:menusection app="<%= app %>" menuSection="<%= (MenuSection)section %>" route="<%= route %>" />
 		<%
 	}
 	else if(section instanceof ContentsSection)

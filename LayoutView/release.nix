@@ -14,11 +14,11 @@ in
     pkgs.stdenv.mkDerivation {
       name = "LayoutView";
       src = ./.;
-      buildInputs = [ pkgs.ant pkgs.jdk ];
-      
+      buildInputs = [ pkgs.ant pkgs.jdk8 ];
+
       LAYOUT_MODEL_LIB = "${LayoutModel}/share/java";
-      TOMCAT_LIB = "${pkgs.tomcat7}/lib";
-      
+      TOMCAT_LIB = "${pkgs.tomcat9}/lib";
+
       buildPhase = ''
         ant generate.library.jar
         find . -name \*.class
@@ -36,11 +36,11 @@ in
     pkgs.stdenv.mkDerivation {
       name = "LayoutView-doc";
       src = ./.;
-      buildInputs = [ pkgs.ant pkgs.jdk ];
-    
+      buildInputs = [ pkgs.ant pkgs.jdk8 ];
+
       LAYOUT_MODEL_LIB = "${LayoutModel}/share/java";
-      TOMCAT_LIB = "${pkgs.tomcat7}/lib";
-    
+      TOMCAT_LIB = "${pkgs.tomcat9}/lib";
+
       buildPhase = ''
         ant doc
       '';

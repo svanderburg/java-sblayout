@@ -28,8 +28,10 @@ The libraries in this package can be built using
 [Apache Ant](http://ant.apache.org). The model package resides in the
 `LayoutModel/` folder and can be built by running:
 
-    $ cd LayoutModel
-    $ ant generate.library.jar
+```bash
+$ cd LayoutModel
+$ ant generate.library.jar
+```
 
 After Ant has finished building, a JAR file named `LayoutModel.jar` has been
 generated.
@@ -37,8 +39,10 @@ generated.
 The view package resides in the `LayoutView/` folder and can be built by
 running:
 
-    $ cd LayoutView
-    $ ant generate library.jar
+```bash
+$ cd LayoutView
+$ ant generate library.jar
+```
 
 After Ant has completed the above task, a JAR file named `LayoutView.jar` has
 been generated.
@@ -83,10 +87,10 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
     private static final Application application = new Application(
         /* Title */
         "Trivial web application",
-        
+
         /* CSS stylesheets */
         new String[] { "default.css" },
-        
+
         /* Pages */
         new StaticContentPage("Fruit", new Contents("fruit.jsp"))
     )
@@ -94,7 +98,7 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
     .addSection("header", new StaticSection("header.jsp"))
     .addSection("contents", new ContentsSection(true))
     .addSection("footer", new StaticSection("footer.jsp"));
-    
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         dispatchLayoutView(application, req, resp);
@@ -122,10 +126,10 @@ written as follows:
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="io.github.svanderburg.layout.model.*,io.github.svanderburg.layout.model.page.*, test.*"%>
 <%
 Application app = (Application)request.getAttribute("app");
-Page currentPage = (Page)request.getAttribute("currentPage");
+Route route = (Route)request.getAttribute("route");
 %>
 <%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
-<layout:index app="<%= app %>" currentPage="<%= currentPage %>" />
+<layout:index app="<%= app %>" route="<%= route %>" />
 ```
 
 The above code fragment retrieves the application model and requested page. Then
@@ -223,25 +227,25 @@ following Apache Ant recipe as a template:
             <fileset dir="${LAYOUT_VIEW_LIB}" includes="*.jar" />
         </copy>
     </target>
-        
+
     <!-- Sets the classpath which is used by the Java compiler -->
     <path id="service.classpath">
         <fileset dir="${TOMCAT_LIB}">
             <include name="*.jar" />
         </fileset>
-    
+
         <fileset dir="${LAYOUT_MODEL_LIB}">
             <include name="*.jar" />
         </fileset>
-        
+
         <fileset dir="${LAYOUT_VIEW_LIB}">
             <include name="*.jar" />
         </fileset>
     </path>
-    
+
     <target name="compile" depends="copy.libraries">
         <mkdir dir="${deploybuild.dir}" />
-            
+
         <javac debug="on"
                fork="true"
                destdir="${deploybuild.dir}"
@@ -284,7 +288,9 @@ targets.
 
 Running the following command-line instruction:
 
-    $ ant generate.war
+```bash
+$ ant generate.war
+```
 
 produces the WAR file that we can deploy to a Servlet container, such as
 [Apache Tomcat](http://tomcat.apache.org).
@@ -552,7 +558,7 @@ and if we address the page with: `http://localhost/index.wss/fruitname/bananas`
 we should see:
 
     bananas
-    
+
 The `DynamicContentPage` constructor also has an optional fourth parameter to
 define additional sub pages or to interpret multiple parameters.
 
@@ -617,7 +623,9 @@ This package includes API documentation, which can be generated with Javadoc. Th
 Ant file in both library projects package contain a target named `doc` target and
 produce the corresponding HTML files in a folder called `doc/`:
 
-    $ ant doc
+```bash
+$ ant doc
+```
 
 License
 =======

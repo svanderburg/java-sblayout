@@ -89,21 +89,25 @@ public class PageAlias extends Page implements ExtendablePage
 	}
 	
 	/**
-	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
+	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
-		if(ids.length == index)
-			return application.lookupSubPage(menuPathIds, params);
+		if(route.indexIsAtRequestedPage(index))
+		{
+			route.reset(menuPathIds);
+			application.examineRoute(route, params);
+		}
 		else
 		{
-			String currentId = ids[index];
+			String currentId = route.getId(index);
 			
 			if(hasSubPage(currentId))
 			{
+				route.visitPage(this);
 				Page currentPage = getSubPage(currentId);
-				return currentPage.lookupSubPage(application, ids, index + 1, params);
+				currentPage.examineRoute(application, route, index + 1, params);
 			}
 			else
 				throw new PageNotFoundException();

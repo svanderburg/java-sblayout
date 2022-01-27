@@ -25,9 +25,9 @@ public class IndexServlet extends HttpServlet
 	 * @param resp HTTP response object to which the output is sent
 	 * @return Page to be currently displayed
 	 */
-	protected static Page lookupCurrentPage(Application application, HttpServletRequest req, HttpServletResponse resp)
+	protected static Route determineRoute(Application application, HttpServletRequest req, HttpServletResponse resp)
 	{
-		Page currentPage;
+		Route route;
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		HashMap<String, String> query = new HashMap<String, String>();
 		String acceptLanguage = req.getHeader("Accept-Language");
@@ -36,21 +36,21 @@ public class IndexServlet extends HttpServlet
 		
 		try
 		{
-			currentPage = application.lookupCurrentPage(req.getRequestURI(), req.getContextPath(), req.getServletPath(), params);
+			route = application.determineRoute(req.getRequestURI(), req.getContextPath(), req.getServletPath(), params);
 			req.setAttribute("query", query);
 		}
 		catch(PageForbiddenException ex)
 		{
 			resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			currentPage = application.lookup403Page(params);
+			route = application.determine403Route(params);
 		}
 		catch(PageNotFoundException ex)
 		{
 			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			currentPage = application.lookup404Page(params);
+			route = application.determine404Route(params);
 		}
 		
-		return currentPage;
+		return route;
 	}
 	
 	/**
@@ -65,7 +65,8 @@ public class IndexServlet extends HttpServlet
 	 */
 	protected static void dispatchLayoutView(Application application, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
-		Page currentPage = lookupCurrentPage(application, req, resp);
+		Route route = determineRoute(application, req, resp);
+		Page currentPage = route.determineCurrentPage();
 		
 		// Include controller page if one is defined
 		if(currentPage instanceof ContentPage)
@@ -79,6 +80,7 @@ public class IndexServlet extends HttpServlet
 		
 		// Include the view page
 		req.setAttribute("app", application);
+		req.setAttribute("route", route);
 		req.setAttribute("currentPage", currentPage);
 		req.getRequestDispatcher("/WEB-INF/index.jsp").include(req, resp);
 	}

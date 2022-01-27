@@ -32,23 +32,24 @@ public class DynamicContentPage extends ContentPage
 	}
 	
 	/**
-	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
+	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
-		if(ids.length == index)
-			return super.lookupSubPage(application, ids, index, params);
+		if(route.indexIsAtRequestedPage(index))
+			super.examineRoute(application, route, index, params);
 		else
 		{
-			String currentId = ids[index];
+			String currentId = route.getId(index);
 			
 			// Memorize the given parameter value
 			@SuppressWarnings("unchecked")
 			HashMap<String, String> query = (HashMap<String, String>)params.get("query");
 			query.put(param, currentId);
 			
-			return dynamicSubPage.lookupSubPage(application, ids, index + 1, params);
+			route.visitPage(this);
+			dynamicSubPage.examineRoute(application, route, index + 1, params);
 		}
 	}
 }

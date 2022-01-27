@@ -52,7 +52,7 @@
 	</target>
 	
 	<target name="generate.war" depends="compile">
-		<war destfile="Simple.war" basedir="${basedir}">
+		<war destfile="Simple.war" basedir="${basedir}" needxmlfile="false">
 			<classes dir="build/classes" includes="**" />
 			<fileset dir="WebContent" includes="**" />
 		</war>

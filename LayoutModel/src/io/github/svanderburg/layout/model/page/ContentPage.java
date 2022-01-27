@@ -63,15 +63,15 @@ public class ContentPage extends Page
 	}
 	
 	/**
-	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
+	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
-		if(ids.length == index)
+		if(route.indexIsAtRequestedPage(index))
 		{
 			if(checkAccessibility())
-				return this;
+				route.visitPage(this);
 			else
 				throw new PageForbiddenException();
 		}

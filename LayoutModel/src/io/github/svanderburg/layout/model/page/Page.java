@@ -57,32 +57,38 @@ public abstract class Page
 	public abstract boolean checkAccessibility();
 	
 	/**
-	 * Lookup a sub page by using the given ids orginating from the last path components
-	 * of an URL.
+	 * Checks all conditions that must be met so that a page is displayed in a menu.
 	 *
-	 * @param application Application layout where the page belongs to
-	 * @param ids The entry page of the application
-	 * @param params A hash map containing arbitrary parameters 
-	 * @return The requested sub page
-	 * @throws PageNotFoundException If the sub page cannot be found
-	 * @throws PageForbiddenException If the sub page is not accessible
+	 * @return true if the page should be visible, else false
 	 */
-	public Page lookupSubPage(Application application, String[] ids, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public boolean checkVisibleInMenu()
 	{
-		return lookupSubPage(application, ids, 0, params);
+		return checkVisibility() && checkAccessibility();
 	}
 	
 	/**
-	 * Lookup a sub page by using the given ids orginating from the last path components
-	 * of an URL.
+	 * Examines a route derived from the path components of the requested URL and records all pages visited.
 	 *
 	 * @param application Application layout where the page belongs to
-	 * @param ids An array of strings containing URL path components
-	 * @param index The current index of the element in the ids array
+	 * @param route Route to investigate
 	 * @param params A hash map containing arbitrary parameters 
-	 * @return The requested sub page
 	 * @throws PageNotFoundException If the sub page cannot be found
 	 * @throws PageForbiddenException If the sub page is not accessible
 	 */
-	public abstract Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException;
+	public void examineRoute(Application application, Route route, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	{
+		examineRoute(application, route, 0, params);
+	}
+	
+	/**
+	 * Examines a route derived from the path components of the requested URL and records all pages visited.
+	 *
+	 * @param application Application layout where the page belongs to
+	 * @param route Route to investigate
+	 * @param index The index of the page to be visited
+	 * @param params A hash map containing arbitrary parameters
+	 * @throws PageNotFoundException If the sub page cannot be found
+	 * @throws PageForbiddenException If the sub page is not accessible
+	 */
+	public abstract void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException;
 }

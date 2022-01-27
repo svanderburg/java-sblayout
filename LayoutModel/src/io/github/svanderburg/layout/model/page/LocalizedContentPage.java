@@ -45,66 +45,78 @@ public class LocalizedContentPage extends StaticContentPage
 		return this;
 	}
 	
+	private TreeMap<Float, String> parseLocaleOptions(String acceptLanguage)
+	{
+		TreeMap<Float, String> options = new TreeMap<Float, String>(Collections.reverseOrder());
+		String[] locales = acceptLanguage.split(",");
+		
+		for(String locale : locales)
+		{
+			String[] localeComponents = locale.split(";");
+			String identifier = localeComponents[0].toLowerCase();
+			float weight;
+			
+			if(localeComponents.length > 1)
+				weight = Float.parseFloat(localeComponents[1].substring(2));
+			else
+				weight = 1.0f; // if a q value is not given, assume 1.0
+			
+			options.put(weight, identifier);
+		}
+		
+		return options;
+	}
+	
+	private Page findLocalizedSubPage(TreeMap<Float, String> options)
+	{
+		for(Entry<Float, String> option : options.entrySet())
+		{
+			String identifier = option.getValue();
+			
+			// Check if there is a locale option that matches the requested locale
+			if(hasSubPage(identifier))
+				return getSubPage(identifier);
+			else
+			{
+				String[] identifierComponents = identifier.split("-");
+				
+				if(identifierComponents.length > 1)
+				{
+					// Try the locale's language without country as a fallback
+					String language = identifierComponents[0];
+					
+					if(hasSubPage(language))
+						return getSubPage(language);
+				}
+			}
+		}
+		
+		/* If all locales have been tried and still none has been found, return the first sub item (that is considered the default) */
+		return subPageExtender.getSubPages().entrySet().iterator().next().getValue();
+	}
+	
 	/**
-	 * @see Page#lookupSubPage(Application, String[], int, HashMap)
+	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override
-	public Page lookupSubPage(Application application, String[] ids, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
-		if(ids.length == index)
+		if(route.indexIsAtRequestedPage(index))
 		{
-			TreeMap<Float, String> options = new TreeMap<Float, String>(Collections.reverseOrder());
-			String acceptLanguage = (String)params.get("acceptLanguage");
-			String[] locales = acceptLanguage.split(",");
-			
+			/* Visit itself */
+			route.visitPage(this);
+
 			/* Parse the locales to separate identifiers and weights */
-			for(String locale : locales)
-			{
-				String[] localeComponents = locale.split(";");
-				String identifier = localeComponents[0];
-				float weight;
-				
-				if(localeComponents.length > 1)
-					weight = Float.parseFloat(localeComponents[1].substring(2));
-				else
-					weight = 1.0f; // if a q value is not given, assume 1.0
-				
-				options.put(weight, identifier);
-			}
+			String acceptLanguage = (String)params.get("acceptLanguage");
+			TreeMap<Float, String> options = parseLocaleOptions(acceptLanguage);
 			
 			/* Try to lookup the locale with the highest priority that is defined as sub item */
-			for(Entry<Float, String> option : options.entrySet())
-			{
-				String identifier = option.getValue();
-				
-				if(hasSubPage(identifier))
-				{
-					Page result = getSubPage(identifier);
-					return result.lookupSubPage(application, ids, index, params);
-				}
-				else
-				{
-					String[] identifierComponents = identifier.split("-");
-					
-					if(identifierComponents.length > 1)
-					{
-						// Try the locale's language without country as a fallback
-						String language = identifierComponents[0];
-						
-						if(hasSubPage(language))
-						{
-							Page result = getSubPage(language);
-							return result.lookupSubPage(application, ids, index, params);
-						}
-					}
-				}
-			}
+			Page subPage = findLocalizedSubPage(options);
 			
-			/* If all locales have been tried and still none has been found, return the first sub item (that is considered the default) */
-			Page result = subPageExtender.getSubPages().entrySet().iterator().next().getValue();
-			return result.lookupSubPage(application, ids, index, params);
+			/* Examine the localized page */
+			subPage.examineRoute(application, route, index, params);
 		}
 		else
-			return super.lookupSubPage(application, ids, index, params);
+			super.examineRoute(application, route, index, params);
 	}	
 }
