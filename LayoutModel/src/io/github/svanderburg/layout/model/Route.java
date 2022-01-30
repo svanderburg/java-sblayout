@@ -7,7 +7,7 @@ import io.github.svanderburg.layout.model.page.*;
  */
 public class Route
 {
-	/** Path components in the URL that correspond to the IDs of the sub pages */ 
+	/** Path components in the URL that correspond to the IDs of the sub pages */
 	private String[] ids;
 	
 	/** Pages visited to reach the currently opened page */
@@ -25,7 +25,7 @@ public class Route
 	
 	/**
 	 * Clears the route so that it can be re-investigated with the given path components
-	 * 
+	 *
 	 * @param ids Path components in the URL that correspond to the IDs of the sub pages
 	 */
 	public void reset(String[] ids)
@@ -36,7 +36,7 @@ public class Route
 	
 	/**
 	 * Visits the provided page by adding a record
-	 * 
+	 *
 	 * @param page Page to visit
 	 */
 	public void visitPage(Page page)
@@ -46,7 +46,7 @@ public class Route
 	
 	/**
 	 * Checks whether the given index is the currently requested page.
-	 * 
+	 *
 	 * @param index Index of a page
 	 * @return true if the corresponding page is currently requested, else false
 	 */

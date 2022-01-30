@@ -58,7 +58,7 @@ public class Application
 	}
 	
 	/**
-	 * Creates a new layout instance.
+	 * Creates a new application instance.
 	 *
 	 * @param title Title of the entire application
 	 * @param styles An array of CSS stylesheets used for all pages
@@ -72,7 +72,7 @@ public class Application
 	}
 	
 	/**
-	 * Creates a new layout instance.
+	 * Creates a new application instance.
 	 * 
 	 * @param title Title of the entire application
 	 * @param styles An array of CSS stylesheets used for all pages
@@ -119,7 +119,7 @@ public class Application
 	 * Derives the route to the 403 error page.
 	 *
 	 * @param params A hash map containing additional parameters
-	 * @return The 403 error page
+	 * @return The 403 error page route
 	 */
 	public Route determine403Route(HashMap<String, Object> params)
 	{
@@ -141,7 +141,7 @@ public class Application
 	 * Derives the route to the 404 error page.
 	 *
 	 * @param params A hash map containing additional parameters
-	 * @return The 404 error page
+	 * @return The 404 error page route
 	 */
 	public Route determine404Route(HashMap<String, Object> params)
 	{
@@ -188,17 +188,17 @@ public class Application
 	public Route determineRoute(String requestURL, String contextPath, String servletPath, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
 	{
 		String sitePath = contextPath+"/"+servletPath;
-		String[] menuPathIds;
+		String[] ids;
 		
 		if(requestURL.length() > sitePath.length()) /* We are not at root level */
 		{
 			String menuPath = requestURL.substring(sitePath.length());
-			menuPathIds = menuPath.split("/");
+			ids = menuPath.split("/");
 		}
 		else
-			menuPathIds = new String[0];
+			ids = new String[0];
 		
-		Route route = new Route(menuPathIds);
+		Route route = new Route(ids);
 		examineRoute(route, params);
 		return route;
 	}

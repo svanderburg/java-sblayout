@@ -10,7 +10,7 @@ import java.util.*;
 public class PageAlias extends Page implements ExtendablePage
 {
 	/** Path components to the actual page relative from the entry page */
-	private String[] menuPathIds;
+	private String[] ids;
 	
 	/** Object used to add subpages to this page */
 	protected SubPageExtender subPageExtender;
@@ -26,9 +26,9 @@ public class PageAlias extends Page implements ExtendablePage
 		super(title);
 		
 		if(path.equals(""))
-			menuPathIds = new String[0];
+			ids = new String[0];
 		else
-			menuPathIds = path.split("/");
+			ids = path.split("/");
 		
 		subPageExtender = new SubPageExtender();
 	}
@@ -96,7 +96,7 @@ public class PageAlias extends Page implements ExtendablePage
 	{
 		if(route.indexIsAtRequestedPage(index))
 		{
-			route.reset(menuPathIds);
+			route.reset(ids);
 			application.examineRoute(route, params);
 		}
 		else
