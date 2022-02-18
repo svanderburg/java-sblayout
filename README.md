@@ -12,7 +12,7 @@ turned maintenance of pages into quite a tedious problem.
 The libraries in this package allow someone to define a web application as a set
 of pages that refer to other sub pages. Developers only have to capture the
 common aspects, such as the sections and style of the entire web application,
-once and only need to provide the individual characteristcs of every additional
+once and only need to provide the individual characteristics of every additional
 sub page.
 
 The libraries automatically compose the corresponding pages, and ensures a number
@@ -63,7 +63,7 @@ application model.
 
 Finally, we always use one single address (invoking the view page) that handles
 all requests to every sub page. The path components that are appended to its URL
-serve as selectors for the subpages of the application. For example:
+serve as selectors for the sub pages of the application. For example:
 
 * `http://localhost/index.wss` refers to the entry page of the web application
 * `http://localhost/index.wss/a` refers to a sub page reachable from the entry page
@@ -111,10 +111,10 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 }
 ```
 
-In the above code fragement, we compose an application model in which every sub
+In the above code fragment, we compose an application model in which every sub
 page consists of three sections. The `header` and `footer` always display the
-same code fragment. The content section is filled with variable text that makes
-every page unique.
+same code fragment. The `contents` section is filled with variable text that
+makes every page unique.
 
 Every sub page has `Trivial web application` in the title and use the style
 settings from the `default.css` stylesheet.
@@ -342,9 +342,9 @@ the oranges sub page: `http://localhost/index.wss/oranges`
 
 Implementing more complex navigation structures
 -----------------------------------------------
-It is also possible to have multiple levels of subpages. For example, we can also
-add sub pages to sub pages and an additional menu section (`submenu`) displaying
-the available sub sub pages per sub page:
+It is also possible to have multiple levels of sub pages. For example, we can
+also add sub pages to sub pages and an additional menu section (`submenu`)
+displaying the available sub sub pages per sub page:
 
 ```java
 /* Sections */
@@ -371,7 +371,7 @@ new StaticContentPage("Fruit", new Contents("fruit.jsp"))
         .addSubPage("yellow", StaticContentPage("Yellow", new Contents("fruit/oranges/yellow.jsp")))),
 ```
 
-Similar to the previous example, a submenu section displays the subpages of a
+Similar to the previous example, a `submenu` section displays the sub pages of a
 particular fruit kind.
 
 We can also use the URL to get to a specific sub sub page. For example, the
@@ -384,7 +384,7 @@ not recommended in most cases.
 Error pages
 -----------
 It may also happen that some error occurs while trying to display a page. For
-example, trying to access a subpage that does not exists (e.g.
+example, trying to access a sub page that does not exists (e.g.
 `http://localhost/index.wss/oranges/purple`) should display a 404 error page.
 Moreover, pages that are inaccessible should display a 403 error page.
 
@@ -433,7 +433,7 @@ You can do in the body of `checkAccessibility()` whatever you want. For example,
 you can also change it to take some cookie values containing a username and
 password that gets verified against something that is stored in a database.
 
-By adding an object that is in instance of our custom class to a subpage of the
+By adding an object that is in instance of our custom class to a sub page of the
 entry page, we can secure it.
 
 Implementing more complex dynamic layouts
@@ -522,7 +522,7 @@ want to use path components as parameters instead. To use path components as
 parameters, we can use objects that are instance of `DynamicContentPage`.
 
 The following code fragments adds a sub page having a sub page that interprets
-the a component:
+a path component:
 
 ```java
 /* Pages */
@@ -615,7 +615,7 @@ This package includes three example web applications that can be found in the
 
 * The `Simple` web application demonstrates simple sub pages, inaccessible sub pages, dynamic sub pages and a page handling POST requests
 * The `I18N` web application demonstrates an internationalised web page displaying the same page in multiple languages
-* The `Advanced` web applications demonstraties more advanced sub pages with multiple content sections. It also demonstrates style and script variability.
+* The `Advanced` web applications demonstrates more advanced sub pages with multiple content sections. It also demonstrates style and script variability.
 
 API documentation
 =================
