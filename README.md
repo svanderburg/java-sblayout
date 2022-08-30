@@ -123,7 +123,12 @@ The view page should reside in `WEB-INF/index.jsp`. A simple variant can be
 written as follows:
 
 ```jsp
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="io.github.svanderburg.layout.model.*,io.github.svanderburg.layout.model.page.*, test.*"%>
+<%@ page language="java"
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="io.github.svanderburg.layout.model.*,io.github.svanderburg.layout.model.page.*, test.*"
+    trimDirectiveWhitespaces="true"
+%>
 <%
 Application app = (Application)request.getAttribute("app");
 Route route = (Route)request.getAttribute("route");
@@ -569,7 +574,9 @@ variable.
 We can implement the `fruitname.jsp` to simply display the parameter:
 
 ```jsp
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*"
+    trimDirectiveWhitespaces="true"
+%>
 <%
 HashMap<String, String> query = (HashMap<String, String>)request.getAttribute("query");
 %>

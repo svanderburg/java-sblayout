@@ -1,3 +1,4 @@
+<%@ page trimDirectiveWhitespaces="true" %>
 <%
 String fullname = (String)request.getAttribute("fullname");
 

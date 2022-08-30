@@ -1,6 +1,7 @@
 <%@ tag description="Displays a collection of sections"
 	language="java"
 	import="java.util.*, io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.page.*, io.github.svanderburg.layout.model.section.*"
+	trimDirectiveWhitespaces="true"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
 <%@ attribute name="route" required="true" type="Route" description="Route from the entry page to the current page to be displayed" %>

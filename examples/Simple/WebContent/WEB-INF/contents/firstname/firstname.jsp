@@ -1,4 +1,6 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*"
+	trimDirectiveWhitespaces="true"
+%>
 <%
 HashMap<String, String> query = (HashMap<String, String>)request.getAttribute("query");
 %>

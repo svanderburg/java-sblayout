@@ -1,6 +1,7 @@
 <%@ tag description="Displays a menu section containing links to sub pages"
 	language="java"
 	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.section.*, io.github.svanderburg.layout.model.page.*, io.github.svanderburg.layout.model.page.subpages.*"
+	trimDirectiveWhitespaces="true"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
 <%@ attribute name="menuSection" required="true" type="MenuSection" description="Menu section to display" %>

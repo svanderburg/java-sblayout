@@ -1,6 +1,7 @@
 <%@ tag description="Displays a section"
 	language="java"
 	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.page.*, io.github.svanderburg.layout.model.section.*"
+	trimDirectiveWhitespaces="true"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
 <%@ attribute name="id" required="true" type="String" description="Id of the section to be displayed" %>
