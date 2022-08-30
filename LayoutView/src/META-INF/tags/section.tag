@@ -11,8 +11,7 @@
 
 <%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
 
-<div id="<%= id %>">
-	<%
+<div id="<%= id %>"><%
 	if(section instanceof StaticSection)
 	{
 		%>
@@ -48,5 +47,4 @@
 		<layout:sections app="<%= app %>" route="<%= route %>" currentPage="<%= currentPage %>" compoundSection="<%= (CompoundSection)section %>" />
 		<%
 	}
-	%>
-</div>
+%></div>
