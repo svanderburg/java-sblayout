@@ -73,8 +73,9 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 	/* Sections */
 	.addSection("header", new ContentsSection(false))
 	.addSection("menu", new MenuSection(0))
-	.addSection("submenu", new MenuSection(1))
-	.addSection("contents", new ContentsSection(true))
+	.addSection("container", new CompoundSection()
+		.addSection("submenu", new MenuSection(1))
+		.addSection("contents", new ContentsSection(true)))
 	.addSection("footer", new StaticSection("footer.jsp"));
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException

@@ -381,6 +381,33 @@ following URL shows the red apple sub sub page:
 You can nest sub pages as deep as you want, but for the sake of usability this is
 not recommended in most cases.
 
+Creating compound sections
+--------------------------
+As explained in the first example, sections normally translate to `div`
+elements inside the `body` element. For the implementation of more advanced
+layouts, it may also be desired to nest `divs`.
+
+It is also possible to nest sections inside `CompoundSection` objects to
+generate nested `div`s:
+
+```java
+/* Sections */
+.addSection("header", new StaticSection("header.jsp"))
+.addSection("menu", new MenuSection(0))
+.addSection("container", new CompoundSection()
+    .addSection("submenu", new MenuSection(1))
+    .addSection("contents", new ContentsSection(true)))
+.addSection("footer", new StaticSection("footer.jsp"));
+```
+
+In the above example, we have added a compound section named: `container`.
+Inside the `container` we have embedded the `submenu` and `contents` sections.
+
+The above organization can be useful to, for example, vertically position the
+`header`, `menu`, `container` and `footer` sections and horizontally align the
+`submenu` and `contents` sections. The CSS properties of the `container` section
+can be used to change the positioning.
+
 Error pages
 -----------
 It may also happen that some error occurs while trying to display a page. For

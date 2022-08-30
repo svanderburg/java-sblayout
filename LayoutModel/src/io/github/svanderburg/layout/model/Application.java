@@ -9,16 +9,13 @@ import java.util.*;
  * Encodes the structure of a web application system which pages have common sections, common style settings
  * and a collection of pages displaying content.
  */
-public class Application
+public class Application implements SectionManager
 {
 	/** Title of the entire application */
 	private String title;
 	
 	/** An array of CSS stylesheets used for all pages */
 	private String[] styles;
-	
-	/** A hash map of sections of which every page is composed */
-	private LinkedHashMap<String, Section> section;
 	
 	/** The entry page of the application (which itself may refer to other sub pages) */
 	private Page entryPage;
@@ -31,6 +28,9 @@ public class Application
 	
 	/** The character encoding standard that the page should use (defaults to UTF-8) */
 	private String charset;
+	
+	/** An object used to add sections to this object */
+	private SectionExtender sectionExtender;
 	
 	/**
 	 * Creates a new application instance.
@@ -92,7 +92,7 @@ public class Application
 			this.charset = "UTF-8";
 		else
 			this.charset = charset;
-		section = new LinkedHashMap<String, Section>();
+		sectionExtender = new SectionExtender();
 	}
 	
 	/**
@@ -270,7 +270,7 @@ public class Application
 	 */
 	public Application addSection(String id, Section section)
 	{
-		this.section.put(id, section);
+		sectionExtender.addSection(id, section);
 		return this;
 	}
 	
@@ -281,7 +281,7 @@ public class Application
 	 */
 	public Set<String> sectionKeys()
 	{
-		return section.keySet();
+		return sectionExtender.sectionKeys();
 	}
 	
 	/**
@@ -292,7 +292,7 @@ public class Application
 	 */
 	public Section getSection(String id)
 	{
-		return section.get(id);
+		return sectionExtender.getSection(id);
 	}
 	
 	/**

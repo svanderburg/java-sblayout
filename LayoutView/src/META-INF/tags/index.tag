@@ -29,14 +29,6 @@ Page currentPage = route.determineCurrentPage();
 		<layout:scripts app="<%= app %>" currentPage="<%= currentPage %>" />
 	</head>
 	<body>
-		<%
-		for(String sectionId : app.sectionKeys())
-		{
-			Section section = app.getSection(sectionId);
-			%>
-			<layout:section id="<%= sectionId %>" app="<%= app %>" section="<%= section %>" route="<%= route %>" currentPage="<%= currentPage %>" />
-			<%
-		}
-		%>
+		<layout:sections app="<%= app %>" route="<%= route %>" currentPage="<%= currentPage %>" />
 	</body>
 </html>

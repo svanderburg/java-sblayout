@@ -15,6 +15,10 @@
 		<path>/META-INF/tags/scripts.tag</path>
 	</tag-file>
 	<tag-file>
+		<name>sections</name>
+		<path>/META-INF/tags/sections.tag</path>
+	</tag-file>
+	<tag-file>
 		<name>section</name>
 		<path>/META-INF/tags/section.tag</path>
 	</tag-file>

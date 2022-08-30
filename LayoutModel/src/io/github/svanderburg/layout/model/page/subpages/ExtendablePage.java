@@ -25,9 +25,9 @@ public interface ExtendablePage
 	public Page getSubPage(String id);
 	
 	/**
-	 * Returns the keys of all subpages.
+	 * Returns the keys of all sub pages.
 	 *
-	 * @return A set containing the keys of all the subpages
+	 * @return A set containing the keys of all the sub pages
 	 */
 	public Set<String> subPageKeys();
 }
