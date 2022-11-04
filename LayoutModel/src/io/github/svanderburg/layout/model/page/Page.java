@@ -71,11 +71,10 @@ public abstract class Page
 	 *
 	 * @param application Application layout where the page belongs to
 	 * @param route Route to investigate
-	 * @param params A hash map containing arbitrary parameters 
-	 * @throws PageNotFoundException If the sub page cannot be found
-	 * @throws PageForbiddenException If the sub page is not accessible
+	 * @param params A hash map containing arbitrary parameters
+	 * @throws PageException In case an error occured, such as the page cannot be found or access is restricted
 	 */
-	public void examineRoute(Application application, Route route, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Application application, Route route, HashMap<String, Object> params) throws PageException
 	{
 		examineRoute(application, route, 0, params);
 	}
@@ -87,8 +86,7 @@ public abstract class Page
 	 * @param route Route to investigate
 	 * @param index The index of the page to be visited
 	 * @param params A hash map containing arbitrary parameters
-	 * @throws PageNotFoundException If the sub page cannot be found
-	 * @throws PageForbiddenException If the sub page is not accessible
+	 * @throws PageException In case an error occured, such as the page cannot be found or access is restricted
 	 */
-	public abstract void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException;
+	public abstract void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageException;
 }

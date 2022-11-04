@@ -3,8 +3,11 @@ package io.github.svanderburg.layout.model;
 /**
  * An exception that gets thrown if access to a page is restricted.
  */
-public class PageForbiddenException extends Exception
+public class PageForbiddenException extends PageException
 {
+	/** Stores the status code value */
+	public final static int STATUS_CODE = 403;
+
 	private static final long serialVersionUID = -3478080095167628755L;
 
 	/**
@@ -12,6 +15,6 @@ public class PageForbiddenException extends Exception
 	 */
 	public PageForbiddenException()
 	{
-		super("Access denied to this page!");
+		super(STATUS_CODE, "Forbidden");
 	}
 }

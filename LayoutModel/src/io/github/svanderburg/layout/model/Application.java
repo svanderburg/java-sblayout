@@ -115,47 +115,30 @@ public class Application implements SectionManager
 		return entryPage;
 	}
 	
+
 	/**
-	 * Derives the route to the 403 error page.
+	 * Derives the route to an error page.
 	 *
+	 * @param cause The page exception that triggered the error page
 	 * @param params A hash map containing additional parameters
-	 * @return The 403 error page route
+	 * @return The error page route
 	 */
-	public Route determine403Route(HashMap<String, Object> params)
+	public Route determineErrorRoute(PageException cause, HashMap<String, Object> params)
 	{
-		Route route = new Route(new String[] { "403" });
+		String[] errorPath = new String[1];
+		errorPath[0] = "" + cause.getStatusCode();
+		Route route = new Route(errorPath);
 		
 		try
 		{
 			entryPage.examineRoute(this, route, params);
 			return route;
 		}
-		catch(Exception ex)
+		catch(PageException ex)
 		{
 			System.err.println(ex);
 		}
-		return null;
-	}
-	
-	/**
-	 * Derives the route to the 404 error page.
-	 *
-	 * @param params A hash map containing additional parameters
-	 * @return The 404 error page route
-	 */
-	public Route determine404Route(HashMap<String, Object> params)
-	{
-		Route route = new Route(new String[] { "404" });
 		
-		try
-		{
-			entryPage.examineRoute(this, route, params);
-			return route;
-		}
-		catch(Exception ex)
-		{
-			System.err.println(ex);
-		}
 		return null;
 	}
 	
@@ -164,11 +147,10 @@ public class Application implements SectionManager
 	 *
 	 * @param route Route to investigate
 	 * @param params A hash map containing additional parameters
-	 * @throws PageNotFoundException If the page cannot be found
-	 * @throws PageForbiddenException If access to the page is restricted
+	 * @throws PageException In case an error occured, such as the page cannot be found or access is restricted
 	 */
 	
-	public void examineRoute(Route route, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Route route, HashMap<String, Object> params) throws PageException
 	{
 		entryPage.examineRoute(this, route, params);
 	}
@@ -181,11 +163,10 @@ public class Application implements SectionManager
 	 * @param servletPath Contains the path to the servlet
 	 * @param params A hash map containing additional parameters
 	 * @return A route that records all visited pages
-	 * @throws PageNotFoundException If the page cannot be found
-	 * @throws PageForbiddenException If access to the page is restricted
+	 * @throws PageException In case an error occured, such as the page cannot be found or access is restricted
 	 */
 	
-	public Route determineRoute(String requestURL, String contextPath, String servletPath, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public Route determineRoute(String requestURL, String contextPath, String servletPath, HashMap<String, Object> params) throws PageException
 	{
 		String sitePath = contextPath+"/"+servletPath;
 		String[] ids;

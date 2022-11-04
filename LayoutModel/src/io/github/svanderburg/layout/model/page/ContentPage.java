@@ -66,7 +66,7 @@ public class ContentPage extends Page
 	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override
-	public void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageNotFoundException, PageForbiddenException
+	public void examineRoute(Application application, Route route, int index, HashMap<String, Object> params) throws PageException
 	{
 		if(route.indexIsAtRequestedPage(index))
 		{

@@ -39,17 +39,12 @@ public class IndexServlet extends HttpServlet
 			route = application.determineRoute(req.getRequestURI(), req.getContextPath(), req.getServletPath(), params);
 			req.setAttribute("query", query);
 		}
-		catch(PageForbiddenException ex)
+		catch(PageException ex)
 		{
-			resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			route = application.determine403Route(params);
+			resp.setStatus(ex.getStatusCode());
+			route = application.determineErrorRoute(ex, params);
 		}
-		catch(PageNotFoundException ex)
-		{
-			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			route = application.determine404Route(params);
-		}
-		
+
 		return route;
 	}
 	
