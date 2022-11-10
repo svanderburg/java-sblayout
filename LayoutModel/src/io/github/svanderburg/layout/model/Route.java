@@ -1,4 +1,6 @@
 package io.github.svanderburg.layout.model;
+import java.io.*;
+import java.net.*;
 import java.util.*;
 import io.github.svanderburg.layout.model.page.*;
 
@@ -120,7 +122,18 @@ public class Route
 		String basePath = "";
 		
 		for(int i = 0; i < level; i++)
-			basePath += ids[i] + "/";
+		{
+			String currentId = ids[i];
+			
+			try
+			{
+				basePath += "/" + URLEncoder.encode(currentId, "UTF-8").replace("+", "%20");
+			}
+			catch(UnsupportedEncodingException ex)
+			{
+				return null; // Should never happen, since UTF-8 is valid
+			}
+		}
 		
 		return basePath;
 	}

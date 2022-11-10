@@ -1,6 +1,8 @@
 package io.github.svanderburg.layout.model.page;
 
 import io.github.svanderburg.layout.model.*;
+import java.io.*;
+import java.net.*;
 import java.util.*;
 
 /**
@@ -47,14 +49,20 @@ public abstract class Page
 	 *
 	 * @return true if the page is visible, else false
 	 */
-	public abstract boolean checkVisibility();
+	public boolean checkVisibility()
+	{
+		return true;
+	}
 	
 	/**
 	 * Checks whether the page is currently accessible.
 	 *
 	 * @return true if the user has access, else false
 	 */
-	public abstract boolean checkAccessibility();
+	public boolean checkAccessibility()
+	{
+		return true;
+	}
 	
 	/**
 	 * Checks all conditions that must be met so that a page is displayed in a menu.
@@ -66,6 +74,58 @@ public abstract class Page
 		return checkVisibility() && checkAccessibility();
 	}
 	
+	/**
+	 * Gets the sub page that is reachable with the given path id
+	 *
+	 * @param id URL path component
+	 * @return The requested sub page
+	 */
+	public Page getSubPage(String id)
+	{
+		return null;
+	}
+	
+	/**
+	 * Checks whether a subpage is directly reachable with the given id from the current page
+	 *
+	 * @param id URL path component
+	 * @return true if and only if the sub page is directly reachable
+	 */
+	public boolean hasSubPage(String id)
+	{
+		return false;
+	}
+	
+	/**
+	 * Creates an iterator that can be used to traverse over all sub pages.
+	 *
+	 * @return An iterator
+	*/
+	public Iterator<String> subPageKeyIterator()
+	{
+		String[] emptyArray = new String[0];
+		return Arrays.stream(emptyArray).iterator(); // This just returns an empty iterator
+	}
+	
+	/**
+	 * Decides how to compose a URL for the given page from its baseURL and the page identifier.
+	 *
+	 * @param baseURL Base URL of the page
+	 * @param id Identifier of the page
+	 * @return The URL to this page
+	 */
+	public String deriveURL(String baseURL, String id)
+	{
+		try
+		{
+			return baseURL + "/" + URLEncoder.encode(id, "UTF-8").replace("+", "%20");
+		}
+		catch(UnsupportedEncodingException ex)
+		{
+			return null; // Should never happen since UTF-8 is supported
+		}
+	}
+
 	/**
 	 * Examines a route derived from the path components of the requested URL and records all pages visited.
 	 *

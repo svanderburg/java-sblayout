@@ -6,7 +6,7 @@ import java.util.*;
  * An object providing facilities to attach one or more sub pages to an existing
  * page.
  */
-public class SubPageExtender implements ExtendablePage
+public class SubPageExtender
 {
 	/** An associative array mapping URL path components to sub pages */
 	private LinkedHashMap<String, Page> subPages;
@@ -31,7 +31,7 @@ public class SubPageExtender implements ExtendablePage
 	}
 	
 	/**
-	 * @see ExtendablePage#hasSubPage(String)
+	 * @see Page#hasSubPage(String)
 	 */
 	public boolean hasSubPage(String id)
 	{
@@ -39,7 +39,7 @@ public class SubPageExtender implements ExtendablePage
 	}
 	
 	/**
-	 * @see ExtendablePage#getSubPage(String)
+	 * @see Page#getSubPage(String)
 	 */
 	public Page getSubPage(String id)
 	{
@@ -47,11 +47,11 @@ public class SubPageExtender implements ExtendablePage
 	}
 	
 	/**
-	 * @see ExtendablePage#subPageKeys()
+	 * @see Page#subPageKeyIterator()
 	 */
-	public Set<String> subPageKeys()
+	public Iterator<String> subPageKeyIterator()
 	{
-		return subPages.keySet();
+		return subPages.keySet().iterator();
 	}
 
 	/**

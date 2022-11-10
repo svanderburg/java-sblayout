@@ -7,7 +7,7 @@ import java.util.*;
  * Defines a page alias that is an alias of an existing page that
  * can be reached from the entry page.
  */
-public class PageAlias extends Page implements ExtendablePage
+public class PageAlias extends Page
 {
 	/** Path components to the actual page relative from the entry page */
 	private String[] ids;
@@ -47,45 +47,30 @@ public class PageAlias extends Page implements ExtendablePage
 	}
 	
 	/**
-	 * @see ExtendablePage#hasSubPage(String)
+	 * @see Page#hasSubPage(String)
 	 */
+	@Override
 	public boolean hasSubPage(String id)
 	{
 		return subPageExtender.hasSubPage(id);
 	}
 	
 	/**
-	 * @see ExtendablePage#getSubPage(String)
+	 * @see Page#getSubPage(String)
 	 */
+	@Override
 	public Page getSubPage(String id)
 	{
 		return subPageExtender.getSubPage(id);
 	}
 	
 	/**
-	 * @see ExtendablePage#subPageKeys()
-	 */
-	public Set<String> subPageKeys()
-	{
-		return subPageExtender.subPageKeys();
-	}
-	
-	/**
-	 * @see Page#checkVisibility()
+	 * @see Page#subPageKeyIterator()
 	 */
 	@Override
-	public boolean checkVisibility()
+	public Iterator<String> subPageKeyIterator()
 	{
-		return true;
-	}
-	
-	/**
-	 * @see Page#checkAccessibility()
-	 */
-	@Override
-	public boolean checkAccessibility()
-	{
-		return true;
+		return subPageExtender.subPageKeyIterator();
 	}
 	
 	/**

@@ -45,24 +45,6 @@ public class ContentPage extends Page
 	}
 	
 	/**
-	 * @see Page#checkVisibility()
-	 */
-	@Override
-	public boolean checkVisibility()
-	{
-		return true;
-	}
-	
-	/**
-	 * @see Page#checkAccessibility()
-	 */
-	@Override
-	public boolean checkAccessibility()
-	{
-		return true;
-	}
-	
-	/**
 	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override

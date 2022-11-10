@@ -8,7 +8,7 @@ import java.util.*;
  * Defines a page referring to a collection of sub pages whose links can be picked
  * from a menu section.
  */
-public class StaticContentPage extends ContentPage implements ExtendablePage
+public class StaticContentPage extends ContentPage
 {
 	/** Object used to add subpages to this page */
 	protected SubPageExtender subPageExtender;
@@ -39,27 +39,30 @@ public class StaticContentPage extends ContentPage implements ExtendablePage
 	}
 	
 	/**
-	 * @see ExtendablePage#hasSubPage(String)
+	 * @see Page#hasSubPage(String)
 	 */
+	@Override
 	public boolean hasSubPage(String id)
 	{
 		return subPageExtender.hasSubPage(id);
 	}
 	
 	/**
-	 * @see ExtendablePage#getSubPage(String)
+	 * @see Page#getSubPage(String)
 	 */
+	@Override
 	public Page getSubPage(String id)
 	{
 		return subPageExtender.getSubPage(id);
 	}
 	
 	/**
-	 * @see ExtendablePage#subPageKeys()
+	 * @see Page#subPageKeyIterator()
 	 */
-	public Set<String> subPageKeys()
+	@Override
+	public Iterator<String> subPageKeyIterator()
 	{
-		return subPageExtender.subPageKeys();
+		return subPageExtender.subPageKeyIterator();
 	}
 	
 	/**

@@ -1,6 +1,6 @@
 <%@ tag description="Displays a menu section containing links to sub pages"
 	language="java"
-	import="io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.section.*, io.github.svanderburg.layout.model.page.*, io.github.svanderburg.layout.model.page.subpages.*"
+	import="java.util.*, io.github.svanderburg.layout.model.*, io.github.svanderburg.layout.model.section.*, io.github.svanderburg.layout.model.page.*, io.github.svanderburg.layout.model.page.subpages.*"
 	trimDirectiveWhitespaces="true"
 %>
 <%@ attribute name="app" required="true" type="Application" description="Encoding of the web application layout and pages" %>
@@ -9,35 +9,24 @@
 <%
 if(menuSection.getLevel() <= route.size())
 {
-	String subPath = route.composeBaseURL(menuSection.getLevel());
+	String baseURL = request.getContextPath() + request.getServletPath() + route.composeBaseURL(menuSection.getLevel());
 	Page rootPage = route.getPage(menuSection.getLevel());
 	
 	// Display links to the sub pages
 	
-	if(rootPage instanceof ExtendablePage)
+	Iterator<String> iterator = rootPage.subPageKeyIterator();
+	
+	while(iterator.hasNext())
 	{
-		ExtendablePage extendablePage = (ExtendablePage)rootPage;
+		String subId = iterator.next();
+		Page subPage = rootPage.getSubPage(subId);
 		
-		for(String subId : extendablePage.subPageKeys())
+		if(subPage.checkVisibleInMenu())
 		{
-			Page subPage = extendablePage.getSubPage(subId);
-			
-			if(subPage.checkVisibleInMenu())
-			{
-				if(subPage instanceof ExternalPage)
-				{
-					ExternalPage externalPage = (ExternalPage)subPage;
-					%>
-					<a href="<%= externalPage.getUrl() %>"><%= externalPage.getTitle() %></a>
-					<%
-				}
-				else
-				{
-					%>
-					<a<%if(route.hasVisitedPageOnLevel(subId, menuSection.getLevel())) { out.print(" class=\"active\""); }%> href="<%= request.getContextPath()+request.getServletPath()+"/"+subPath+subId %>"><%= subPage.getTitle() %></a>
-					<%
-				}
-			}
+			String url = subPage.deriveURL(baseURL, subId);
+			%>
+			<a<%if(route.hasVisitedPageOnLevel(subId, menuSection.getLevel())) { out.print(" class=\"active\""); }%> href="<%= url %>"><%= subPage.getTitle() %></a>
+			<%
 		}
 	}
 }

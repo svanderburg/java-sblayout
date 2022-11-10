@@ -1,7 +1,6 @@
 package io.github.svanderburg.layout.model.page;
 
 import io.github.svanderburg.layout.model.*;
-
 import java.util.*;
 
 /**
@@ -32,25 +31,15 @@ public class ExternalPage extends Page
 	{
 		return url;
 	}
-
+	
 	/**
-	 * @see Page#checkVisibility()
+	 * @see Page#deriveURL(String, String)
 	 */
-	@Override
-	public boolean checkVisibility()
+	public String deriveURL(String baseURL, String id)
 	{
-		return true;
+		return url;
 	}
-
-	/**
-	 * @see Page#checkAccessibility()
-	 */
-	@Override
-	public boolean checkAccessibility()
-	{
-		return true;
-	}
-
+	
 	/**
 	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
