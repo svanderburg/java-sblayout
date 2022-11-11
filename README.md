@@ -640,6 +640,9 @@ There are also facilities to include application wide and per-page stylesheets
 and script includes. We can also make pages invisible from menu sections by
 instantiating pages that are prefixed with `Hidden*`.
 
+It is also possible to automatically generate a site map (`sitemap.tag`) and
+bread crumbs for the currently visited page (`breadcrumbs.tag`).
+
 Consult the API documentation for more information.
 
 Examples

@@ -18,7 +18,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>form</servlet-name>
-    <url-pattern>/form.wss</url-pattern>
+    <url-pattern>/tests/form.wss</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

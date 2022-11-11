@@ -26,4 +26,16 @@
 		<name>styles</name>
 		<path>/META-INF/tags/styles.tag</path>
 	</tag-file>
+	<tag-file>
+		<name>breadcrumbs</name>
+		<path>/META-INF/tags/breadcrumbs.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>sitemap</name>
+		<path>/META-INF/tags/sitemap.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>subsitemap</name>
+		<path>/META-INF/tags/subsitemap.tag</path>
+	</tag-file>
 </taglib>

@@ -40,13 +40,16 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 				.addSubPage("subpage22", new StaticContentPage("Subpage 2.2", new Contents("page2/subpage22.jsp")))
 				.addSubPage("subpage23", new StaticContentPage("Subpage 2.3", new Contents("page2/subpage23.jsp"))))
 			
-			.addSubPage("form", new StaticContentPage("Form", new Contents("form.jsp", "/form.wss", null, null)))
-			
 			.addSubPage("firstname", new DynamicContentPage("First name", "firstname", new Contents("firstname.jsp"), new StaticContentPage("First name", new Contents("firstname/firstname.jsp"))
 				.addSubPage("lastname", new DynamicContentPage("Last name", "lastname", new Contents("firstname/lastname.jsp"), new StaticContentPage("Last name", new Contents("firstname/lastname/lastname.jsp"))))))
 			
-			.addSubPage("external", new ExternalPage("External", "http://www.google.com")),
-		
+			.addSubPage("external", new ExternalPage("External", "http://www.google.com"))
+			
+			.addSubPage("tests", new StaticContentPage("Tests", new Contents("tests.jsp"))
+				.addSubPage("form", new StaticContentPage("Form", new Contents("tests/form.jsp", "/tests/form.wss", null, null)))
+				.addSubPage("breadcrumbs", new StaticContentPage("Bread crumbs", new Contents("tests/breadcrumbs.jsp")))
+				.addSubPage("sitemap", new StaticContentPage("Site map", new Contents("tests/sitemap.jsp")))),
+			
 		/* Favorite icon */
 		"favicon.ico"
 	)
