@@ -12,9 +12,19 @@ public class PageNotFoundException extends PageException
 	
 	/**
 	 * Creates a new PageNotFoundException instance
+	 *
+	 * @param displayMessage Error message to be displayed (optional)
+	 */
+	public PageNotFoundException(String displayMessage)
+	{
+		super(STATUS_CODE, "Not Found", displayMessage);
+	}
+	
+	/**
+	 * Creates a new PageNotFoundException instance
 	 */
 	public PageNotFoundException()
 	{
-		super(STATUS_CODE, "Not Found");
+		this(null);
 	}
 }

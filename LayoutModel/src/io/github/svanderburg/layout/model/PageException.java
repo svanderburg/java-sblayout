@@ -10,6 +10,23 @@ public class PageException extends Exception
 	/** HTTP status code */
 	private int statusCode;
 	
+	/** Error message to be displayed (optional) */
+	private String displayMessage;
+	
+	/**
+	 * Creates a new PageException instance.
+	 *
+	 * @param statusCode HTTP status code
+	 * @param message Exception error message
+	 * @param displayMessage Error message to be displayed (optional)
+	 */
+	public PageException(int statusCode, String message, String displayMessage)
+	{
+		super(message);
+		this.statusCode = statusCode;
+		this.displayMessage = displayMessage;
+	}
+	
 	/**
 	 * Creates a new PageException instance.
 	 *
@@ -18,8 +35,7 @@ public class PageException extends Exception
 	 */
 	public PageException(int statusCode, String message)
 	{
-		super(message);
-		this.statusCode = statusCode;
+		this(statusCode, message, null);
 	}
 	
 	/**
@@ -30,5 +46,15 @@ public class PageException extends Exception
 	public int getStatusCode()
 	{
 		return statusCode;
+	}
+	
+	/**
+	 * Returns the error message to be display or null if there none.
+	 *
+	 * @return Display message
+	 */
+	public String getDisplayMessage()
+	{
+		return displayMessage;
 	}
 }

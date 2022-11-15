@@ -21,6 +21,7 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 		
 		/* Pages */
 		new StaticContentPage("Home", new Contents("home.jsp"))
+			.addSubPage("400", new HiddenStaticContentPage("Bad request", new Contents("error/400.jsp")))
 			.addSubPage("403", new HiddenStaticContentPage("Forbidden", new Contents("error/403.jsp")))
 			.addSubPage("404", new HiddenStaticContentPage("Page not found", new Contents("error/404.jsp")))
 			

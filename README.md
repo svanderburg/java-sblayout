@@ -390,7 +390,7 @@ Creating compound sections
 --------------------------
 As explained in the first example, sections normally translate to `div`
 elements inside the `body` element. For the implementation of more advanced
-layouts, it may also be desired to nest `divs`.
+layouts, it may also be desired to nest `div`s.
 
 It is also possible to nest sections inside `CompoundSection` objects to
 generate nested `div`s:
@@ -418,14 +418,16 @@ Error pages
 It may also happen that some error occurs while trying to display a page. For
 example, trying to access a sub page that does not exists (e.g.
 `http://localhost/index.wss/oranges/purple`) should display a 404 error page.
-Moreover, pages that are inaccessible should display a 403 error page.
+Moreover, pages that are inaccessible should display a 403 error page and pages
+that fail to process input parameters should return a 400 error page.
 
 These error pages can be defined by adding them as a sub page to the entry page
-with keys `403` and `404`:
+with keys `400`, `403` and `404`:
 
 ```java
 /* Pages */
 new StaticContentPage("Fruit", new Contents("fruit.jsp"))
+    .addSubPage("400", new StaticContentPage("Bad request", new Contents("error/400.jsp")))
     .addSubPage("403", new StaticContentPage("Forbidden", new Contents("error/403.jsp")))
     .addSubPage("404", new StaticContentPage("Page not found", new Contents("error/404.jsp")))
     ...
@@ -546,6 +548,20 @@ answer is displayed.
 
 The page provided as second parameter to the `Contents` constructor takes
 care of processing the POST parameter. It can both be a Servlet or a JSP page.
+
+In addition to processing the input parameters, controllers can also throw
+exceptions that are instances of the `PageException` class. For example, you
+may want to check the provided user input for the presence of an answer.
+If none was provided, you may want to throw a `BadRequestException` with a
+message that explains to the user that a mandatory input parameter is missing.
+
+Since it is not possible to throw any other exceptions than a `ServletException`
+or `IOException` from a servlet, an error must be propagated by adding an `ex`
+request attribute referring to the exception that needs to be thrown:
+
+```java
+req.setAttribute("ex", new BadRequestException("A parameter was invalid!"));
+```
 
 Using path components as parameters
 -----------------------------------

@@ -12,9 +12,19 @@ public class PageForbiddenException extends PageException
 
 	/**
 	 * Creates a new PageForbiddenException instance
+	 *
+	 * @param displayMessage Error message to be displayed (optional)
+	 */
+	public PageForbiddenException(String displayMessage)
+	{
+		super(STATUS_CODE, "Forbidden", displayMessage);
+	}
+	
+	/**
+	 * Creates a new PageForbiddenException instance
 	 */
 	public PageForbiddenException()
 	{
-		super(STATUS_CODE, "Forbidden");
+		this(null);
 	}
 }
