@@ -9,7 +9,8 @@
 <%
 if(menuSection.getLevel() <= route.size())
 {
-	String baseURL = request.getContextPath() + request.getServletPath() + route.composeBaseURL(menuSection.getLevel());
+	String contextPath = request.getContextPath() + request.getServletPath();
+	String baseURL = route.composeURLAtLevel(contextPath, menuSection.getLevel());
 	Page rootPage = route.getPage(menuSection.getLevel());
 	
 	// Display links to the sub pages
