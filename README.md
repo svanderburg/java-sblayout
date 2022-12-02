@@ -656,8 +656,12 @@ There are also facilities to include application wide and per-page stylesheets
 and script includes. We can also make pages invisible from menu sections by
 instantiating pages that are prefixed with `Hidden*`.
 
-It is also possible to automatically generate a site map (`sitemap.tag`) and
-bread crumbs for the currently visited page (`breadcrumbs.tag`).
+This framework also offers specialized features through the following taglibs:
+* A site map can be generated with: `sitemap.tag`
+* Bread crumbs, that show the path to the currently displayed page, can be
+  generated with: `breadcrumbs.tag`
+* It is also possible to embed a menu section in a content page (rather than
+  declaring a menu section) with: `embeddedsitemap.tag`
 
 Consult the API documentation for more information.
 

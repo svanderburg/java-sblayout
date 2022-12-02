@@ -8,7 +8,7 @@
 <%@ attribute name="displayRoot" required="false" type="Boolean" description="Indicates whether to include the root page" %>
 <%@ attribute name="contextPath" required="true" type="String" description="Context path of the servlet" %>
 
-<p>
+<p class="breadcrumbs">
 	<%
 	// Assign default values
 	if(startIndex == null)
@@ -20,16 +20,18 @@
 	boolean first = true;
 	String url = contextPath;
 
+	int routeSize = route.size();
+
 	if(displayRoot)
 	{
 		Page currentPage = route.getPage(0);
 		%>
-		<a href="<%= url %>"><%= currentPage.getTitle() %></a>
+		<a href="<%= url %>"<%= (routeSize == 0) ? " class=\"active\"" : "" %>><%= currentPage.getTitle() %></a>
 		<%
 		first = false;
 	}
 
-	for(int i = 0; i < route.size(); i++)
+	for(int i = 0; i < routeSize; i++)
 	{
 		String currentId = route.getId(i);
 		Page currentPage = route.getPage(i + 1);
@@ -42,7 +44,7 @@
 				first = false;
 			else
 				out.print(" &raquo; ");
-			%><a href="<%= url %>"><%= currentPage.getTitle() %></a>
+			%><a href="<%= url %>"<%= (i == routeSize - 1) ? " class=\"active\"" : "" %>><%= currentPage.getTitle() %></a>
 			<%
 		}
 	}

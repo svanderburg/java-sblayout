@@ -50,7 +50,11 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 				.addSubPage("form", new StaticContentPage("Form", new Contents("tests/form.jsp", "/tests/form.wss", null, null)))
 				.addSubPage("breadcrumbs", new StaticContentPage("Bread crumbs", new Contents("tests/breadcrumbs.jsp")))
 				.addSubPage("sitemap", new StaticContentPage("Site map", new Contents("tests/sitemap.jsp")))
-				.addSubPage("parent", new StaticContentPage("Parent", new Contents("tests/parent.jsp")))),
+				.addSubPage("parent", new StaticContentPage("Parent", new Contents("tests/parent.jsp")))
+				.addSubPage("menusection", new StaticContentPage("Menu section", new Contents("tests/menusection.jsp"))
+					.addSubPage("subpage1", new StaticContentPage("Sub page 1", new Contents("tests/menusection/subpage1.jsp")))
+					.addSubPage("subpage2", new StaticContentPage("Sub page 2", new Contents("tests/menusection/subpage2.jsp")))
+					.addSubPage("subpage3", new StaticContentPage("Sub page 3", new Contents("tests/menusection/subpage3.jsp"))))),
 			
 		/* Favorite icon */
 		"favicon.ico"

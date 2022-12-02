@@ -7,8 +7,16 @@
 		<path>/META-INF/tags/index.tag</path>
 	</tag-file>
 	<tag-file>
+		<name>inlinemenusection</name>
+		<path>/META-INF/tags/inlinemenusection.tag</path>
+	</tag-file>
+	<tag-file>
 		<name>menusection</name>
 		<path>/META-INF/tags/menusection.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>embeddedmenusection</name>
+		<path>/META-INF/tags/embeddedmenusection.tag</path>
 	</tag-file>
 	<tag-file>
 		<name>scripts</name>
