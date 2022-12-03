@@ -9,11 +9,4 @@
 
 <%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
 
-<%
-if(menuSection.getLevel() <= route.size())
-{
-	%>
-	<layout:inlinemenusection route="<%= route %>" level="<%= menuSection.getLevel() %>" />
-	<%
-}
-%>
+<layout:inlinemenusection route="<%= route %>" level="<%= menuSection.getLevel() %>" />
