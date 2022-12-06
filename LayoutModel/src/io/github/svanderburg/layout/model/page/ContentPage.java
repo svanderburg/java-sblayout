@@ -45,6 +45,15 @@ public class ContentPage extends Page
 	}
 	
 	/**
+	 * @see Page#checkActive(Route, String, int)
+	 */
+	@Override
+	public boolean checkActive(Route route, String id, int level)
+	{
+		return route.hasVisitedPageOnLevel(id, level);
+	}
+	
+	/**
 	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override

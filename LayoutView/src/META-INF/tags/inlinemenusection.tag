@@ -25,9 +25,18 @@ if(level <= route.size())
 		if(subPage.checkVisibleInMenu())
 		{
 			String url = subPage.deriveURL(baseURL, subId);
-			%>
-			<a<%if(route.hasVisitedPageOnLevel(subId, level)) { out.print(" class=\"active\""); }%> href="<%= url %>"><%= subPage.getTitle() %></a>
-			<%
+			if(subPage.checkActive(route, subId, level))
+			{
+				%>
+				<a class="active" href="<%= url %>"><strong><%= subPage.getTitle() %></strong></a>
+				<%
+			}
+			else
+			{
+				%>
+				<a href="<%= url %>"><%= subPage.getTitle() %></a>
+				<%
+			}
 		}
 	}
 }

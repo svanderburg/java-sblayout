@@ -127,6 +127,16 @@ public abstract class Page
 	}
 
 	/**
+	 * Checks whether the page is currently active
+	 *
+	 * @param route The route from the entry page to the current page
+	 * @param id Identifier of the page
+	 * @param level Level in the navigation structure
+	 * @return true if the page is active, else false
+	 */
+	public abstract boolean checkActive(Route route, String id, int level);
+
+	/**
 	 * Examines a route derived from the path components of the requested URL and records all pages visited.
 	 *
 	 * @param application Application layout where the page belongs to

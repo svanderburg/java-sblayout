@@ -74,6 +74,26 @@ public class PageAlias extends Page
 	}
 	
 	/**
+	 * @see Page#checkActive(Route, String, int)
+	 */
+	@Override
+	public boolean checkActive(Route route, String id, int level)
+	{
+		if(route.size() == ids.length)
+		{
+			for(int i = 0; i < ids.length; i++)
+			{
+				if(!ids[i].equals(route.getId(i)))
+					return false;
+			}
+			
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	/**
 	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override

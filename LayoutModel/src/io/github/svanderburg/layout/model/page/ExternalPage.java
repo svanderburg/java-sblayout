@@ -41,6 +41,15 @@ public class ExternalPage extends Page
 	}
 	
 	/**
+	 * @see Page#checkActive(Route, String, int)
+	 */
+	@Override
+	public boolean checkActive(Route route, String id, int level)
+	{
+		return false; // An external page can never be active since it always redirects the user to an external site
+	}
+	
+	/**
 	 * @see Page#examineRoute(Application, Route, int, HashMap)
 	 */
 	@Override
