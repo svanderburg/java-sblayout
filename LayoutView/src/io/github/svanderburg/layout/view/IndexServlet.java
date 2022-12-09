@@ -38,7 +38,7 @@ public class IndexServlet extends HttpServlet
 	 * @param req HTTP request object that contains request parameters
 	 * @param resp HTTP response object to which the output is sent
 	 * @return Route to the page to be currently displayed
-	 * @throws Page exception when the lookup fails
+	 * @throws PageException when the lookup fails
 	 */
 	protected static Route determineRoute(Application application, HttpServletRequest req, HttpServletResponse resp) throws PageException
 	{
@@ -50,6 +50,7 @@ public class IndexServlet extends HttpServlet
 	 * Directs the user to an error page.
 	 *
 	 * @param application Encoding of the web application layout and pages
+	 * @param ex Exception that causes the redirect
 	 * @param req HTTP request object that contains request parameters
 	 * @param resp HTTP response object to which the output is sent
 	 * @return Route to the error page
@@ -115,6 +116,10 @@ public class IndexServlet extends HttpServlet
 			route = redirectToErrorPage(application, ex, req, resp);
 			currentPage = route.determineCurrentPage();
 		}
+		
+		// Return HTML mime type
+		resp.setContentType("text/html");
+		resp.setCharacterEncoding(application.getCharset());
 		
 		// Include the view page
 		req.setAttribute("app", application);

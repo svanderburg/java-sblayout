@@ -136,7 +136,7 @@ public class Route
 	/**
 	 * Composes the URL to the parent page of the currently opened URL.
 	 * 
-	 * @param $baseURL Base URL to prepend to the resulting URL
+	 * @param baseURL Base URL to prepend to the resulting URL
 	 * @return The URL to the parent page
 	 */
 	public String composeParentPageURL(String baseURL)

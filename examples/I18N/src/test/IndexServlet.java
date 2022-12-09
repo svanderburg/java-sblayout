@@ -14,7 +14,7 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 	
 	private static final Application application = new Application(
 		/* Title */
-		"Test website",
+		"Internationalised test website",
 		
 		/* CSS stylesheets */
 		new String[] { "default.css" },
