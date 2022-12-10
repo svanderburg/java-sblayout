@@ -7,6 +7,14 @@ import io.github.svanderburg.layout.model.page.content.*;
 public class HiddenStaticContentPage extends StaticContentPage
 {
 	/**
+	 * @see StaticContentPage#StaticContentPage(String, Contents, String)
+	 */
+	public HiddenStaticContentPage(String title, Contents contents, String menuItem)
+	{
+		super(title, contents, menuItem);
+	}
+	
+	/**
 	 * @see StaticContentPage#StaticContentPage(String, Contents)
 	 */
 	public HiddenStaticContentPage(String title, Contents contents)

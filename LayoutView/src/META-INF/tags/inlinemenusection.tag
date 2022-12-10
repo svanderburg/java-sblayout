@@ -6,6 +6,8 @@
 <%@ attribute name="route" required="true" type="Route" description="Route from the entry page to current page to be displayed" %>
 <%@ attribute name="level" required="true" type="Integer" description="The level in the navigation structure where to display sub page links from" %>
 
+<%@ taglib uri="http://svanderburg.github.io" prefix="layout" %>
+
 <%
 if(level <= route.size())
 {
@@ -25,16 +27,21 @@ if(level <= route.size())
 		if(subPage.checkVisibleInMenu())
 		{
 			String url = subPage.deriveURL(baseURL, subId);
-			if(subPage.checkActive(route, subId, level))
+			boolean active = subPage.checkActive(route, subId, level);
+			
+			if(subPage.getMenuItem() == null)
 			{
 				%>
-				<a class="active" href="<%= url %>"><strong><%= subPage.getTitle() %></strong></a>
+				<layout:menuitem active="<%= active %>" url="<%= url %>" subPage="<%= subPage %>" />
 				<%
 			}
 			else
 			{
+				request.setAttribute("active", active);
+				request.setAttribute("url", url);
+				request.setAttribute("subPage", subPage);
 				%>
-				<a href="<%= url %>"><%= subPage.getTitle() %></a>
+				<jsp:include page="<%= \"menuitems/\" + subPage.getMenuItem() %>" />
 				<%
 			}
 		}

@@ -6,13 +6,21 @@ package io.github.svanderburg.layout.model.page;
 public class HiddenLocalizedContentPage extends LocalizedContentPage
 {
 	/**
+	 * @see LocalizedContentPage#LocalizedContentPage(String)
+	 */
+	public HiddenLocalizedContentPage(String menuItem)
+	{
+		super(menuItem);
+	}
+	
+	/**
 	 * @see LocalizedContentPage#LocalizedContentPage()
 	 */
 	public HiddenLocalizedContentPage()
 	{
 		super();
 	}
-	
+
 	/**
 	 * @see Page#checkVisibility()
 	 */

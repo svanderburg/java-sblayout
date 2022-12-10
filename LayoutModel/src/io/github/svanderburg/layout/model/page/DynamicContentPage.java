@@ -23,12 +23,26 @@ public class DynamicContentPage extends ContentPage
 	 * @param param The name of the query parameter that must be set when retrieving the sub page
 	 * @param contents A content object storing properties of the content sections of a page
 	 * @param dynamicSubPage The dynamic sub page that interprets the URL parameter component
+	 * @param menuItem JSP file that renders the menu item. Leaving it null just renders a hyperlink
+	 */
+	public DynamicContentPage(String title, String param, Contents contents, Page dynamicSubPage, String menuItem)
+	{
+		super(title, contents, menuItem);
+		this.param = param;
+		this.dynamicSubPage = dynamicSubPage;
+	}
+	
+	/**
+	 * Create a new DynamicContentPage instance.
+	 * 
+	 * @param title Title of the page that is used as a label in a menu section
+	 * @param param The name of the query parameter that must be set when retrieving the sub page
+	 * @param contents A content object storing properties of the content sections of a page
+	 * @param dynamicSubPage The dynamic sub page that interprets the URL parameter component
 	 */
 	public DynamicContentPage(String title, String param, Contents contents, Page dynamicSubPage)
 	{
-		super(title, contents);
-		this.param = param;
-		this.dynamicSubPage = dynamicSubPage;
+		this(title, param, contents, dynamicSubPage, null);
 	}
 	
 	/**

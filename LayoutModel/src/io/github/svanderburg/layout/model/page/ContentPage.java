@@ -17,13 +17,25 @@ public class ContentPage extends Page
 	 * 
 	 * @param title Title of the page that is used as a label in a menu section
 	 * @param contents A content object storing properties of the content sections of a page
+	 * @param menuItem JSP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public ContentPage(String title, Contents contents)
+	public ContentPage(String title, Contents contents, String menuItem)
 	{
-		super(title);
+		super(title, menuItem);
 		setContents(contents);
 	}
 	
+	/**
+	 * Creates a new ContentPage instance
+	 * 
+	 * @param title Title of the page that is used as a label in a menu section
+	 * @param contents A content object storing properties of the content sections of a page
+	 */
+	public ContentPage(String title, Contents contents)
+	{
+		this(title, contents, null);
+	}
+
 	/**
 	 * Sets the content of the page.
 	 * 

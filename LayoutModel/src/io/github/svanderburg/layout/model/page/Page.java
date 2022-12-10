@@ -14,14 +14,19 @@ public abstract class Page
 	/** Title of the page that is used as a label in a menu section */
 	protected String title;
 
+	/** JSP file that renders the menu item. Leaving it null just renders a hyperlink */
+	protected String menuItem;
+
 	/**
 	 * Creates a new Page instance.
 	 * 
 	 * @param title Title of the page that is used as a label in a menu section
+	 * @param menuItem JSP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public Page(String title)
+	public Page(String title, String menuItem)
 	{
 		setTitle(title);
+		this.menuItem = menuItem;
 	}
 
 	/**
@@ -42,6 +47,16 @@ public abstract class Page
 	public String getTitle()
 	{
 		return title;
+	}
+	
+	/**
+	 * Returns the file that renders a menu item
+	 *
+	 * @return JSP file that renders the menu item
+	 */
+	public String getMenuItem()
+	{
+		return menuItem;
 	}
 	
 	/**

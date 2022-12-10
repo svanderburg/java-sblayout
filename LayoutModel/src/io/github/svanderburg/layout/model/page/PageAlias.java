@@ -20,10 +20,11 @@ public class PageAlias extends Page
 	 * 
 	 * @param title Title of the page that is used as a label in a menu section
 	 * @param path Path to the actual page relative from the entry page
+	 * @param menuItem JSP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public PageAlias(String title, String path)
+	public PageAlias(String title, String path, String menuItem)
 	{
-		super(title);
+		super(title, menuItem);
 		
 		if(path.equals(""))
 			ids = new String[0];
@@ -31,6 +32,17 @@ public class PageAlias extends Page
 			ids = path.split("/");
 		
 		subPageExtender = new SubPageExtender();
+	}
+	
+	/**
+	 * Creates a new PageAlias instance.
+	 * 
+	 * @param title Title of the page that is used as a label in a menu section
+	 * @param path Path to the actual page relative from the entry page
+	 */
+	public PageAlias(String title, String path)
+	{
+		this(title, path, null);
 	}
 	
 	/**

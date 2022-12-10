@@ -17,12 +17,22 @@ public class LocalizedContentPage extends StaticContentPage
 {
 	/**
 	 * Creates a new LocalizedContentPage instance.
+	 *
+	 * @param menuItem JSP file that renders the menu item. Leaving it null just renders a hyperlink
+	 */
+	public LocalizedContentPage(String menuItem)
+	{
+		super(null, null, menuItem);
+	}
+	
+	/**
+	 * Creates a new LocalizedContentPage instance.
 	 */
 	public LocalizedContentPage()
 	{
-		super(null, null);
+		this(null);
 	}
-	
+
 	/**
 	 * Adds a sub page to which the menu section displaying the current page refers
 	 * 

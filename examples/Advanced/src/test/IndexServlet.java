@@ -14,7 +14,7 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 	
 	private static final Application application = new Application(
 		/* Title */
-		"Fancy test website",
+		"Advanced test website",
 		
 		/* CSS stylesheets */
 		new String[] { "default.css" },
@@ -63,7 +63,17 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 					.addSection("header", "header/first.jsp")))
 				.addSubPage("second", new StaticContentPage("Second", new Contents()
 					.addSection("contents", "header/second.jsp")
-					.addSection("header", "header/second.jsp")))),
+					.addSection("header", "header/second.jsp"))))
+			
+			.addSubPage("menu", new StaticContentPage("Menu", new Contents()
+				.addSection("contents", "menu.jsp")
+				.addSection("header", "home.jsp"))
+				.addSubPage("icon", new StaticContentPage("Icon", new Contents()
+					.addSection("contents", "menu/icon.jsp")
+					.addSection("header", "home.jsp"), "menu/icon.jsp"))
+				.addSubPage("style", new StaticContentPage("Style", new Contents()
+					.addSection("contents", "menu/style.jsp")
+					.addSection("header", "home.jsp"), "menu/style.jsp"))),
 		/* Favorite icon */
 		"favicon.ico",
 		

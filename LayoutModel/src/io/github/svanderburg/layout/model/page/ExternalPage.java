@@ -16,13 +16,25 @@ public class ExternalPage extends Page
 	 * 
 	 * @param title Title of the page that is used as a label in a menu section
 	 * @param url External URL to which the page redirects
+	 * @param menuItem JSP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public ExternalPage(String title, String url)
+	public ExternalPage(String title, String url, String menuItem)
 	{
-		super(title);
+		super(title, menuItem);
 		this.url = url;
 	}
 	
+	/**
+	 * Creates a new ExternalPage instance.
+	 * 
+	 * @param title Title of the page that is used as a label in a menu section
+	 * @param url External URL to which the page redirects
+	 */
+	public ExternalPage(String title, String url)
+	{
+		this(title, url, null);
+	}
+
 	/**
 	 * Returns the URL to which the page redirects
 	 * @return External URL to which the page redirects
