@@ -37,11 +37,8 @@ if(level <= route.size())
 			}
 			else
 			{
-				request.setAttribute("active", active);
-				request.setAttribute("url", url);
-				request.setAttribute("subPage", subPage);
 				%>
-				<jsp:include page="<%= \"menuitems/\" + subPage.getMenuItem() %>" />
+				<layout:custommenuitem active="<%= active %>" url="<%= url %>" subPage="<%= subPage %>" />
 				<%
 			}
 		}
