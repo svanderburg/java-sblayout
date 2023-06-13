@@ -26,7 +26,7 @@ if(level <= route.size())
 		
 		if(subPage.checkVisibleInMenu())
 		{
-			String url = subPage.deriveURL(baseURL, subId);
+			String url = subPage.deriveURL(baseURL, subId, "&amp;");
 			boolean active = subPage.checkActive(route, subId, level);
 			
 			if(subPage.getMenuItem() == null)

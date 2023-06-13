@@ -27,7 +27,7 @@ while(iterator.hasNext())
 	
 	if(subPage.checkVisibleInMenu())
 	{
-		String url = subPage.deriveURL(baseURL, id);
+		String url = subPage.deriveURL(baseURL, id, "&amp;");
 		%>
 		<li>
 			<a href="<%= url %>"><%= subPage.getTitle() %></a>

@@ -121,15 +121,16 @@ public abstract class Page
 		String[] emptyArray = new String[0];
 		return Arrays.stream(emptyArray).iterator(); // This just returns an empty iterator
 	}
-	
+
 	/**
 	 * Decides how to compose a URL for the given page from its baseURL and the page identifier.
 	 *
 	 * @param baseURL Base URL of the page
 	 * @param id Identifier of the page
+	 * @param argSeparator The symbol that separates arguments
 	 * @return The URL to this page
 	 */
-	public String deriveURL(String baseURL, String id)
+	public String deriveURL(String baseURL, String id, String argSeparator)
 	{
 		try
 		{
@@ -139,6 +140,18 @@ public abstract class Page
 		{
 			return null; // Should never happen since UTF-8 is supported
 		}
+	}
+
+	/**
+	 * Decides how to compose a URL for the given page from its baseURL and the page identifier.
+	 *
+	 * @param baseURL Base URL of the page
+	 * @param id Identifier of the page
+	 * @return The URL to this page
+	 */
+	public String deriveURL(String baseURL, String id)
+	{
+		return deriveURL(baseURL, id, "&amp;");
 	}
 
 	/**

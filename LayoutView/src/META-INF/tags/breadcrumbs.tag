@@ -36,7 +36,7 @@
 		String currentId = route.getId(i);
 		Page currentPage = route.getPage(i + 1);
 		
-		url = currentPage.deriveURL(url, currentId);
+		url = currentPage.deriveURL(url, currentId, "&amp;");
 		
 		if(i >= startIndex)
 		{

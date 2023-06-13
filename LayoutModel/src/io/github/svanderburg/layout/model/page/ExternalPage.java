@@ -45,9 +45,9 @@ public class ExternalPage extends Page
 	}
 	
 	/**
-	 * @see Page#deriveURL(String, String)
+	 * @see Page#deriveURL(String, String, String)
 	 */
-	public String deriveURL(String baseURL, String id)
+	public String deriveURL(String baseURL, String id, String argSeparator)
 	{
 		return url;
 	}

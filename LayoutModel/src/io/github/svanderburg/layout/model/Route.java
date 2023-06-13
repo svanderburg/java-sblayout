@@ -116,9 +116,10 @@ public class Route
 	 * 
 	 * @param baseURL Base URL to prepend to the resulting URL
 	 * @param level Page level
+	 * @param argSeparator The symbol that separates arguments
 	 * @return The URL of the current page or any of its parent pages
 	 */
-	public String composeURLAtLevel(String baseURL, int level)
+	public String composeURLAtLevel(String baseURL, int level, String argSeparator)
 	{
 		String url = baseURL;
 		
@@ -127,10 +128,34 @@ public class Route
 			String currentId = ids[i];
 			Page currentPage = pages.elementAt(i + 1);
 			
-			url = currentPage.deriveURL(url, currentId);
+			url = currentPage.deriveURL(url, currentId, argSeparator);
 		}
 		
 		return url;
+	}
+	
+	/**
+	 * Composes the URL for the current page or any of its parent pages at a certain level.
+	 * 
+	 * @param baseURL Base URL to prepend to the resulting URL
+	 * @param level Page level
+	 * @return The URL of the current page or any of its parent pages
+	 */
+	public String composeURLAtLevel(String baseURL, int level)
+	{
+		return composeURLAtLevel(baseURL, level, "&amp;");
+	}
+	
+	/**
+	 * Composes the URL to the parent page of the currently opened URL.
+	 * 
+	 * @param baseURL Base URL to prepend to the resulting URL
+	 * @param argSeparator The symbol that separates arguments
+	 * @return The URL to the parent page
+	 */
+	public String composeParentPageURL(String baseURL, String argSeparator)
+	{
+		return composeURLAtLevel(baseURL, ids.length - 1, argSeparator);
 	}
 	
 	/**
@@ -141,6 +166,6 @@ public class Route
 	 */
 	public String composeParentPageURL(String baseURL)
 	{
-		return composeURLAtLevel(baseURL, ids.length - 1);
+		return composeParentPageURL(baseURL, "&amp;");
 	}
 }
