@@ -1,6 +1,4 @@
 package io.github.svanderburg.layout.model;
-import java.io.*;
-import java.net.*;
 import java.util.*;
 import io.github.svanderburg.layout.model.page.*;
 

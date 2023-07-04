@@ -73,7 +73,10 @@ public class IndexServlet extends io.github.svanderburg.layout.view.IndexServlet
 					.addSection("header", "home.jsp"), "menu/icon.jsp"))
 				.addSubPage("style", new StaticContentPage("Style", new Contents()
 					.addSection("contents", "menu/style.jsp")
-					.addSection("header", "home.jsp"), "menu/style.jsp"))),
+					.addSection("header", "home.jsp"), "menu/style.jsp"))
+				.addSubPage("sitemapmenu", new StaticContentPage("Site map menu", new Contents()
+					.addSection("contents", "menu/sitemapmenu.jsp")
+					.addSection("header", "home.jsp")))),
 		/* Favorite icon */
 		"favicon.ico",
 		

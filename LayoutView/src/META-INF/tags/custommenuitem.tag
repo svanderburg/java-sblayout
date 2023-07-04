@@ -13,4 +13,4 @@ request.setAttribute("active", active);
 request.setAttribute("url", url);
 request.setAttribute("subPage", subPage);
 %>
-<jsp:include page="<%= \"menuitems/\" + subPage.getMenuItem() %>" />
+<jsp:include page="<%= \"/WEB-INF/menuitems/\" + subPage.getMenuItem() %>" />

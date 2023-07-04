@@ -1,0 +1,69 @@
+<project name="SiteMapMenu" basedir="." default="generate.war">
+	<property name="build.dir" value="build" />
+	<property name="deploybuild.dir" value="${build.dir}/classes" />
+	
+	<!-- Imports environment variables as properties -->
+	<property environment="env" />
+	
+	<condition property="TOMCAT_LIB" value="${env.TOMCAT_LIB}" else="../apache-tomcat">
+		<isset property="env.TOMCAT_LIB" />
+	</condition>
+	
+	<condition property="LAYOUT_MODEL_LIB" value="${env.LAYOUT_MODEL_LIB}" else="../LayoutModel">
+		<isset property="env.LAYOUT_MODEL_LIB" />
+	</condition>
+	
+	<condition property="LAYOUT_VIEW_LIB" value="${env.LAYOUT_VIEW_LIB}" else="../LayoutView">
+		<isset property="env.LAYOUT_VIEW_LIB" />
+	</condition>
+	
+	<target name="copy.libraries">
+		<copy toDir="${basedir}/WebContent/WEB-INF/lib">
+			<fileset dir="${LAYOUT_MODEL_LIB}" includes="*.jar" />
+		</copy>
+		<copy toDir="${basedir}/WebContent/WEB-INF/lib">
+			<fileset dir="${LAYOUT_VIEW_LIB}" includes="*.jar" />
+		</copy>
+	</target>
+	
+	<!-- Sets the classpath which is used by the Java compiler -->
+	<path id="service.classpath">
+		<fileset dir="${TOMCAT_LIB}">
+			<include name="*.jar" />
+		</fileset>
+		
+		<fileset dir="${LAYOUT_MODEL_LIB}">
+			<include name="*.jar" />
+		</fileset>
+		
+		<fileset dir="${LAYOUT_VIEW_LIB}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+		
+	<target name="compile" depends="copy.libraries">
+		<mkdir dir="${deploybuild.dir}" />
+		
+		<javac debug="on"
+			   fork="true"
+			   destdir="${deploybuild.dir}"
+			   srcdir="${basedir}/src"
+			   classpathref="service.classpath"/>
+	</target>
+	
+	<target name="generate.war" depends="compile">
+		<war destfile="SiteMapMenu.war" basedir="${basedir}" needxmlfile="false">
+			<classes dir="build/classes" includes="**" />
+			<fileset dir="WebContent" includes="**" />
+		</war>
+	</target>
+	
+	<target name="clean">
+		<delete file="${basedir}/SiteMapMenu.war" />
+		<delete>
+			<fileset dir="${basedir}/WebContent/WEB-INF/lib" includes="*.jar" />
+		</delete>
+		<delete dir="${deploybuild.dir}" quiet="true" />
+		<delete dir="${build.dir}" quiet="true" />
+	</target>
+</project>

@@ -18,6 +18,12 @@
 		<jsp:include page="<%= \"sections/\"+((StaticSection)section).getContents() %>" />
 		<%
 	}
+	else if(section instanceof SiteMapSection)
+	{
+		%>
+		<layout:sitemapsection siteMapSection="<%= (SiteMapSection)section %>" route="<%= route %>" />
+		<%
+	}
 	else if(section instanceof MenuSection)
 	{
 		%>

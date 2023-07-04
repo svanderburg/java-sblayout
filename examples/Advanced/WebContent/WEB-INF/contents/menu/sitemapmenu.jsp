@@ -9,4 +9,4 @@ Route route = (Route)request.getAttribute("route");
 String contextPath = request.getContextPath() + request.getServletPath();
 %>
 
-<layout:sitemap route="<%= route %>" contextPath="<%= contextPath %>" />
+<layout:sitemap route="<%= route %>" displayMenuItems="<%= true %>" contextPath="<%= contextPath %>" />

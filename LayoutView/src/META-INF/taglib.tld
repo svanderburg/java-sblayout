@@ -11,6 +11,10 @@
 		<path>/META-INF/tags/menuitem.tag</path>
 	</tag-file>
 	<tag-file>
+		<name>standardmenuitem</name>
+		<path>/META-INF/tags/standardmenuitem.tag</path>
+	</tag-file>
+	<tag-file>
 		<name>custommenuitem</name>
 		<path>/META-INF/tags/custommenuitem.tag</path>
 	</tag-file>
@@ -25,6 +29,10 @@
 	<tag-file>
 		<name>embeddedmenusection</name>
 		<path>/META-INF/tags/embeddedmenusection.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>sitemapsection</name>
+		<path>/META-INF/tags/sitemapsection.tag</path>
 	</tag-file>
 	<tag-file>
 		<name>scripts</name>

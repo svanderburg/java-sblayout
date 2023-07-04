@@ -29,18 +29,9 @@ if(level <= route.size())
 			String url = subPage.deriveURL(baseURL, subId, "&amp;");
 			boolean active = subPage.checkActive(route, subId, level);
 			
-			if(subPage.getMenuItem() == null)
-			{
-				%>
-				<layout:menuitem active="<%= active %>" url="<%= url %>" subPage="<%= subPage %>" />
-				<%
-			}
-			else
-			{
-				%>
-				<layout:custommenuitem active="<%= active %>" url="<%= url %>" subPage="<%= subPage %>" />
-				<%
-			}
+			%>
+			<layout:menuitem active="<%= active %>" url="<%= url %>" subPage="<%= subPage %>" />
+			<%
 		}
 	}
 }
