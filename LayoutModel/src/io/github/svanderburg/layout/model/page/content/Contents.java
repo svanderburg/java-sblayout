@@ -12,7 +12,7 @@ public class Contents
 	/** A hash map mapping division ids onto JSP files representing HTML content */
 	private HashMap<String, String> sections;
 	
-	/** A string containing the path to the controller page that handles GET or POST parameters */
+	/** A string containing the path to the controller page that handles GET or POST parameters or null if there is no controller (pages that do not process parameters do not require one) */
 	private String controller;
 	
 	/** An array containing stylesheet files to include */
@@ -43,7 +43,7 @@ public class Contents
 	/**
 	 * Creates a new contents instance.
 	 * 
-	 * @param controller A string containing the path to the controller page that handles GET or POST parameters
+	 * @param controller A string containing the path to the controller page that handles GET or POST parameters or null if there is no controller (pages that do not process parameters do not require one)
 	 * @param styles An array containing stylesheet files to include
 	 * @param scripts An array containing script files to include
 	 */
@@ -59,7 +59,7 @@ public class Contents
 	 * Creates a new contents instance.
 	 * 
 	 * @param contents The JSP file that is displayed in the contents section with id contents
-	 * @param controller A string containing the path to the controller page that handles GET or POST parameters
+	 * @param controller A string containing the path to the controller page that handles GET or POST parameters or null if there is no controller (pages that do not process parameters do not require one)
 	 * @param styles An array containing stylesheet files to include
 	 * @param scripts An array containing script files to include
 	 */

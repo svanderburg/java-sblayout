@@ -20,7 +20,7 @@ public class Application implements SectionManager
 	/** The entry page of the application (which itself may refer to other sub pages) */
 	private Page entryPage;
 
-	/** The favorite icon the page should use */
+	/** The favorite icon the page should use or null if no favorite icon is used */
 	private String icon;
 
 	/** An array of JavaScript files included by all pages */
@@ -50,7 +50,7 @@ public class Application implements SectionManager
 	 * @param title Title of the entire application
 	 * @param styles An array of CSS stylesheets used for all pages
 	 * @param entryPage The entry page of the application
-	 * @param icon The favorite icon the page should use
+	 * @param icon The favorite icon the page should use or null if no favorite icon is used
 	 */
 	public Application(String title, String[] styles, Page entryPage, String icon)
 	{
@@ -63,7 +63,7 @@ public class Application implements SectionManager
 	 * @param title Title of the entire application
 	 * @param styles An array of CSS stylesheets used for all pages
 	 * @param entryPage The entry page of the application
-	 * @param icon The favorite icon the page should use
+	 * @param icon The favorite icon the page should use or null if no favorite icon is used
 	 * @param scripts An array of JavaScript files included by all pages
 	 */
 	public Application(String title, String[] styles, Page entryPage, String icon, String[] scripts)
@@ -77,7 +77,7 @@ public class Application implements SectionManager
 	 * @param title Title of the entire application
 	 * @param styles An array of CSS stylesheets used for all pages
 	 * @param entryPage The entry page of the application
-	 * @param icon The favorite icon the page should use
+	 * @param icon The favorite icon the page should use or null if no favorite icon is used
 	 * @param scripts An array of JavaScript files included by all pages
 	 * @param charset The character encoding standard that the page should use
 	 */
